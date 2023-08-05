@@ -2,8 +2,14 @@
 	"config": {
 		"env": ".env",
 		"alacritty": "config_apps/alacritty.yml",
-		"themes": "themes/WhiteSur-Dark.tar.xz",
-		"icons": "icons/kora.tar.xz"
+		"theme": {
+			"path": "themes/WhiteSur-Dark.tar.xz",
+			"name": "WhiteSur-Dark"
+		},
+		"icons": {
+			"paht": "icons/kora.tar.xz",
+			"name": "kora"
+		}
 	},
 	"apps": {
 		"delete": ["gnome-contacts", "gnome-calendar", "baobab", "info", "seahorse", "yelp", "gucharmap", "gnome-font-viewer", "gnome-weather", "com.github.donadigo.eddy", "gnome-power-manager", "popsicle-gtk", "libgl1-mesa-dev", "firefox", "totem", "geary"],

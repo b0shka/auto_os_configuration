@@ -6,6 +6,9 @@ VENV_PATH=$(echo $CONFIG | jq -r '.path.venv')
 
 source $HOME/$ENV_PATH
 
+
+### INSTALL, DELETE
+
 delete() {
 	APPS_DELETE=$(echo $CONFIG | jq -r '.apps.delete[]')
 
@@ -30,23 +33,31 @@ install_flatpak() {
 	done
 }
 
-# copy_ssh_keys() {
-# 	SSH_PATH=$(echo $CONFIG | jq -r '.config.ssh')
-# 	sudo mkdir $HOME/.ssh
-# 	sudo chmod 777 $HOME/.ssh
-# 	cp $HOME/$SSH_PATH/* $HOME/.ssh/
-# }
+install_golang() {
+	echo "install_golang"
+}
 
-copy_themes_and_icons() {
-	THEMES_PATH=$(echo $CONFIG | jq -r '.config.themes')
+
+### CONFIGURE
+
+configure_themes_and_icons() {
+	# theme
+	THEME_PATH=$(echo $CONFIG | jq -r '.config.theme.path')
+	THEME_NAME=$(echo $CONFIG | jq -r '.config.theme.name')
+
 	sudo mkdir $HOME/.themes
 	sudo chmod 777 $HOME/.themes
-	tar -C $HOME/.themes -xf $HOME/$THEMES_PATH
+	tar -C $HOME/.themes -xf $HOME/$THEME_PATH
+	gsettings set org.gnome.desktop.interface gtk-theme $THEME_NAME
 
-	ICONS_PATH=$(echo $CONFIG | jq -r '.config.icons')
+	# icons
+	ICONS_PATH=$(echo $CONFIG | jq -r '.config.icons.path')
+	ICONS_NAME=$(echo $CONFIG | jq -r '.config.icons.name')
+
 	sudo mkdir $HOME/.icons
 	sudo chmod 777 $HOME/.icons
 	tar -C $HOME/.icons -xf $HOME/$ICONS_PATH
+	gsettings set org.gnome.desktop.interface icon-theme $ICONS_NAME
 }
 
 configure_megacmd() {
@@ -66,6 +77,9 @@ configure_git() {
 	git config --global core.editor code
 	git config --global init.defaultBranch main
 }
+
+
+### DOWNLOAD
 
 download_folders_from_mega() {
 	MEGA_DOWNLOAD_FOLDERS=$(echo $CONFIG | jq -r '.mega.download_folders[]')
@@ -102,6 +116,7 @@ main() {
 	# delete
 	# install
 	# install_flatpak
+	# install_golang
 	# download_yandex_browser
 	# download_brave_browser
 	# download_mongodb
