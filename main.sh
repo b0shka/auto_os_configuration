@@ -104,15 +104,10 @@ download_folders_from_mega() {
 }
 
 download_notes() {
-	NOTES_PATH=$(jq -r '.notes.path' $CONFIG_FILE)
-	NOTES_FOLDER=$(jq -r '.notes.name' $CONFIG_FILE)
+	NOTES_PATH=$(jq -r '.paths.notes' $CONFIG_FILE)
 
-	if test -d $HOME/$NOTES_PATH; then
-		mkdir $HOME/$NOTES_PATH/$NOTES_FOLDER
-		git clone $NOTES_GIT_LINK $HOME/$NOTES_PATH/$NOTES_FOLDER
-	else
-		echo "Directory $NOTES_PATH does not exist"
-	fi
+	mkdir $HOME/$NOTES_PATH
+	git clone $NOTES_GIT_LINK $HOME/$NOTES_PATH
 }
 
 

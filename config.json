@@ -18,13 +18,10 @@
 	},
 	"mega": {
 		"download_folders": ["personal", "programming", "study", "other"],
-		"exclude_folders": []
-	},
-	"notes": {
-		"path": "personal",
-		"name": "Заметки"
+		"exclude_folders": ["node_modules", ".git", ".vscode", ".idea", ".next", "__pycache__"]
 	},
 	"paths": {
+		"notes": "personal/Заметки",
 		"venv": "other/env"
 	},
 	"hotkeys": {
