@@ -22,37 +22,12 @@ install() {
 	done
 }
 
-download_mongodb() {
-	wget https://downloads.mongodb.com/compass/mongodb-compass_1.37.0_amd64.deb
-	sudo dpkg -i mongodb-compass_1.37.0_amd64.deb
-	rm mongodb-compass_1.37.0_amd64.deb
-}
+install_flatpak() {
+	APPS_INSTALL_FLATPAK=$(echo $CONFIG | jq -r '.apps.install_flatpak[]')
 
-download_yandex_browser() {
-	wget https://browser.yandex.ru/download?banerid=6302000000&os=linux&package=deb&x64=1
-	sudo dpkg -i Yandex.deb
-	rm Yandex.deb
-}
-
-download_brave_browser() {
-	sudo apt install curl
-	sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-	echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-	sudo apt update
-	sudo apt install brave-browser
-}
-
-download_jetbrains() {
-	sudo apt install libfuse2
-	wget https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.28.1.15219.tar.gz
-
-	tar -xvf jetbrains-toolbox-1.28.1.15219.tar.gz
-	rm jetbrains-toolbox-1.28.1.15219.tar.gz
-
-	sudo chmod 777 jetbrains-toolbox-1.28.1.15219/jetbrains-toolbox
-	sudo jetbrains-toolbox-1.28.1.15219/jetbrains-toolbox
-
-	sudo rm -r jetbrains-toolbox-1.28.1.15219
+	for i in ${APPS_INSTALL_FLATPAK[@]}; do
+	  	flatpak install flathub $i
+	done
 }
 
 # copy_ssh_keys() {
@@ -126,6 +101,7 @@ add_alias() {
 main() {
 	# delete
 	# install
+	# install_flatpak
 	# download_yandex_browser
 	# download_brave_browser
 	# download_mongodb
