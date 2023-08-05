@@ -1,0 +1,24 @@
+{
+	"config": {
+		"env": ".env",
+		"alacritty": "alacritty.yml",
+		"themes": "themes/WhiteSur-Dark.tar.xz",
+		"icons": "icons/kora.tar.xz"
+	},
+	"apps": {
+		"delete": ["gnome-contacts", "gnome-calendar", "baobab", "info", "seahorse", "yelp", "gucharmap", "gnome-font-viewer", "gnome-weather", "com.github.donadigo.eddy", "gnome-power-manager", "popsicle-gtk", "libgl1-mesa-dev", "firefox", "totem", "geary"],
+		"install": ["ssh", "keepassxc", "git", "transmission", "gnome-tweaks", "build-essential", "chrome-gnome-shell", "mat2", "alacritty", "filezilla", "megacmd", "python3-pip"]
+	},
+	"mega": {
+		"download_folders": ["personal", "programming", "study", "other"],
+		"exclude_folders": []
+	},
+	"notes": {
+		"path": "personal",
+		"name": "Заметки"
+	},
+	"paths": {
+		"venv": "other/env",
+		"backup_script": "programming/scripts/backup/backup.sh"
+	}
+}
