@@ -1,16 +1,15 @@
 #! /bin/bash
 
-CONFIG=$(cat config.json | jq '.')
-ENV_PATH=$(echo $CONFIG | jq -r '.config.env')
-VENV_PATH=$(echo $CONFIG | jq -r '.path.venv')
+CONFIG_FILE="config.json"
+ENV_PATH=$(jq -r '.config.env' $CONFIG_FILE)
 
 source $HOME/$ENV_PATH
 
 
-### INSTALL, DELETE
+### INSTALL, DELETE APPS
 
 delete() {
-	APPS_DELETE=$(echo $CONFIG | jq -r '.apps.delete[]')
+	APPS_DELETE=$(jq -r '.apps.delete[]' $CONFIG_FILE)
 
 	for i in ${APPS_DELETE[@]}; do
 	  	sudo apt-get remove $i -y
@@ -18,7 +17,7 @@ delete() {
 }
 
 install() {
-	APPS_INSTALL=$(echo $CONFIG | jq -r '.apps.install[]')
+	APPS_INSTALL=$(jq -r '.apps.install[]' $CONFIG_FILE)
 
 	for i in ${APPS_INSTALL[@]}; do
 	  	sudo apt-get install $i -y
@@ -26,7 +25,7 @@ install() {
 }
 
 install_flatpak() {
-	APPS_INSTALL_FLATPAK=$(echo $CONFIG | jq -r '.apps.install_flatpak[]')
+	APPS_INSTALL_FLATPAK=$(jq -r '.apps.install_flatpak[]' $CONFIG_FILE)
 
 	for i in ${APPS_INSTALL_FLATPAK[@]}; do
 	  	flatpak install flathub $i
@@ -38,12 +37,12 @@ install_golang() {
 }
 
 
-### CONFIGURE
+### CONFIGURE SYSTEM
 
 configure_themes_and_icons() {
 	# theme
-	THEME_PATH=$(echo $CONFIG | jq -r '.config.theme.path')
-	THEME_NAME=$(echo $CONFIG | jq -r '.config.theme.name')
+	THEME_PATH=$(jq -r '.config.theme.path' $CONFIG_FILE)
+	THEME_NAME=$(jq -r '.config.theme.name' $CONFIG_FILE)
 
 	sudo mkdir $HOME/.themes
 	sudo chmod 777 $HOME/.themes
@@ -51,8 +50,8 @@ configure_themes_and_icons() {
 	gsettings set org.gnome.desktop.interface gtk-theme $THEME_NAME
 
 	# icons
-	ICONS_PATH=$(echo $CONFIG | jq -r '.config.icons.path')
-	ICONS_NAME=$(echo $CONFIG | jq -r '.config.icons.name')
+	ICONS_PATH=$(jq -r '.config.icons.path' $CONFIG_FILE)
+	ICONS_NAME=$(jq -r '.config.icons.name' $CONFIG_FILE)
 
 	sudo mkdir $HOME/.icons
 	sudo chmod 777 $HOME/.icons
@@ -60,12 +59,27 @@ configure_themes_and_icons() {
 	gsettings set org.gnome.desktop.interface icon-theme $ICONS_NAME
 }
 
+configure_hotkeys() {
+	HOTKEYS=$(jq -r '.hotkeys.keybindings' $CONFIG_FILE)
+	keys=$(echo $HOTKEYS | jq -r 'keys[]')
+
+	for key in $keys; do
+		value=$(echo $HOTKEYS | jq -r ".$key")
+		gsettings set org.gnome.desktop.wm.keybindings $key $value
+	done
+
+	# gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Super>AudioPlay']"
+}
+
+
+### CONFIGURE APPS
+
 configure_megacmd() {
     mega-login $MEGA_LOGIN $MEGA_PASSWORD
 }
 
 configure_alacritty() {
-	ALACRITTY_PATH=$(echo $CONFIG | jq -r '.config.alacritty')
+	ALACRITTY_PATH=$(jq -r '.config.alacritty' $CONFIG_FILE)
 	sudo mkdir $HOME/.config/alacritty
 	sudo chmod 777 $HOME/.config/alacritty
 	sudo cp $ALACRITTY_PATH $HOME/.config/alacritty/
@@ -82,7 +96,7 @@ configure_git() {
 ### DOWNLOAD
 
 download_folders_from_mega() {
-	MEGA_DOWNLOAD_FOLDERS=$(echo $CONFIG | jq -r '.mega.download_folders[]')
+	MEGA_DOWNLOAD_FOLDERS=$(jq -r '.mega.download_folders[]' $CONFIG_FILE)
 
 	for i in ${MEGA_DOWNLOAD_FOLDERS[@]}; do
 	  	mega-get /$i $HOME
@@ -90,8 +104,8 @@ download_folders_from_mega() {
 }
 
 download_notes() {
-	NOTES_PATH=$(echo $CONFIG | jq -r '.notes.path')
-	NOTES_FOLDER=$(echo $CONFIG | jq -r '.notes.name')
+	NOTES_PATH=$(jq -r '.notes.path' $CONFIG_FILE)
+	NOTES_FOLDER=$(jq -r '.notes.name' $CONFIG_FILE)
 
 	if test -d $HOME/$NOTES_PATH; then
 		mkdir $HOME/$NOTES_PATH/$NOTES_FOLDER
@@ -101,35 +115,43 @@ download_notes() {
 	fi
 }
 
+
+### OTHER
+
 create_venv_python() {
+	VENV_PATH=$(jq -r '.paths.venv' $CONFIG_FILE)
 	python3 -m venv $HOME/$VENV_PATH
 }
 
-add_alias() {
-	BACKUP_SCRIPT_PATH=$(echo $CONFIG | jq -r '.path.backup_script')
-	echo "alias backup='$HOME/$BACKUP_SCRIPT_PATH'" >> ~/.bashrc
-	
-	echo "alias env='source $VENV_PATH/bin/activate'" >> ~/.bashrc
+add_aliases() {
+	ALIASES=$(jq -r '.aliases' $CONFIG_FILE)
+	keys=$(echo $ALIASES | jq -r 'keys[]')
+
+	for key in $keys; do
+		value=$(echo $ALIASES | jq -r ".$key")
+		echo "alias $key='$value'" >> ~/.bashrc
+	done
 }
+
 
 main() {
 	# delete
 	# install
 	# install_flatpak
 	# install_golang
-	# download_yandex_browser
-	# download_brave_browser
-	# download_mongodb
-	# download_jetbrains
-	# copy_ssh_keys
-	# copy_themes_and_icons
+
+	# configure_themes_and_icons
+	# configure_hotkeys
+
 	# configure_megacmd
 	# configure_alacritty
 	# configure_git
+
 	# download_folders_from_mega
 	# download_notes
+
 	# create_venv_python
-	# add_alias
+	# add_aliases
 }
 
 main

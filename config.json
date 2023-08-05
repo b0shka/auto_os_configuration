@@ -25,7 +25,16 @@
 		"name": "Заметки"
 	},
 	"paths": {
-		"venv": "other/env",
-		"backup_script": "programming/scripts/backup/backup.sh"
+		"venv": "other/env"
+	},
+	"hotkeys": {
+		"keybindings": {
+			"close": "['<Super>x']",
+			"minimize": "['<Super>z']"
+		}
+	},
+	"aliases": {
+		"backup": "~/programming/scripts/backup/backup.sh",
+		"venv": "source ~/other/env/bin/activate"
 	}
 }
