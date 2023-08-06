@@ -100,7 +100,7 @@ configure_other() {
 	gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,close'
 
 	gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
-	gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 18.0
+	gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 21.0
 	gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to 8.0
 
 	gsettings set org.gnome.desktop.interface clock-format '24h'
@@ -126,10 +126,6 @@ configure_other() {
 	gsettings set org.gnome.desktop.privacy remove-old-temp-files false
 	# действие для кнопки выключения
 	gsettings set org.gnome.settings-daemon.plugins.power power-button-action nothing
-
-	# Включить автоматическую систему ожидания после 15 минутов неактивности
-	gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 900
-	gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-timeout 900
 
 	# Отключить автоматическую систему ожидания
 	gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type nothing
@@ -165,6 +161,17 @@ configure_git() {
 	git config --global user.email $GIT_EMAIL
 	git config --global core.editor code
 	git config --global init.defaultBranch main
+}
+
+configure_nautilus() {
+	gsettings set org.gnome.nautilus.preferences default-folder-viewer list-view
+	gsettings set org.gnome.nautilus.list-view default-zoom-level small
+
+	gsettings set org.gnome.nautilus.preferences show-hidden-files false
+	gsettings set org.gnome.nautilus.preferences click-policy double
+	gsettings set org.gnome.nautilus.compression default-compression-format tar.xz
+
+	gsettings set org.gnome.nautilus.list-view default-visible-columns "['name', 'size']"
 }
 
 
@@ -203,11 +210,14 @@ main() {
 	# configure_themes_and_icons
 	# configure_hotkeys
 	# configure_dock_panel
+	# configure_pop_cosmic
+	# configure_other
 	# configure_aliases
 
 	# configure_megacmd
 	# configure_alacritty
 	# configure_git
+	# configure_nautilus
 
 	# download_folders_from_mega
 	# download_notes
