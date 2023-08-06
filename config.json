@@ -2,6 +2,7 @@
 	"config": {
 		"env": ".env",
 		"alacritty": "config_apps/alacritty.yml",
+		"vscode": "config_apps/settings.json",
 		"theme": {
 			"path": "themes/WhiteSur-Dark.tar.xz",
 			"name": "WhiteSur-Dark"
@@ -49,5 +50,8 @@
 			"show-applications-button": false,
 			"show-workspaces-button": false
 		}
+	},
+	"vscode": {
+		"extensions": ["ms-ceintl.vscode-language-pack-ru", "golang.go", "ms-python.python", "juanblanco.solidity"]
 	}
 }

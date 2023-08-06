@@ -174,6 +174,16 @@ configure_nautilus() {
 	gsettings set org.gnome.nautilus.list-view default-visible-columns "['name', 'size']"
 }
 
+configure_vscode() {
+	VSCODE_PATH=$(jq -r '.config.vscode' $CONFIG_FILE)
+	cp $VSCODE_PATH "$HOME/.config/Code/User/settings.json"
+
+	VSCODE_EXTENSIONS=$(jq -r '.vscode.extensions[]' $CONFIG_FILE)
+	for i in ${VSCODE_EXTENSIONS[@]}; do
+	  	code --install-extension $i
+	done
+}
+
 
 ### DOWNLOAD
 
@@ -218,6 +228,7 @@ main() {
 	# configure_alacritty
 	# configure_git
 	# configure_nautilus
+	# configure_vscode
 
 	# download_folders_from_mega
 	# download_notes
