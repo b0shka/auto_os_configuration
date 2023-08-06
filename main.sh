@@ -71,6 +71,81 @@ configure_hotkeys() {
 	# gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Super>AudioPlay']"
 }
 
+configure_dock_panel() {
+	DOCK_SETTINGS=$(jq -r '.os.dock' $CONFIG_FILE)
+	keys=$(echo $DOCK_SETTINGS | jq -r 'keys[]')
+
+	for key in $keys; do
+		value=$(echo $DOCK_SETTINGS | jq -r ".$key")
+		gsettings set org.gnome.shell.extensions.dash-to-dock $key $value
+	done
+}
+
+configure_pop_cosmic() {
+	POP_COSMIC_SETTINGS=$(jq -r '.os.pop-cosmic' $CONFIG_FILE)
+	keys=$(echo $POP_COSMIC_SETTINGS | jq -r 'keys[]')
+
+	for key in $keys; do
+		value=$(echo $POP_COSMIC_SETTINGS | jq -r ".$key")
+		gsettings set org.gnome.shell.extensions.pop-cosmic $key $value
+	done
+}
+
+configure_other() {
+	gsettings set org.gnome.desktop.sound allow-volume-above-100-percent true
+	gsettings set org.gnome.desktop.interface clock-show-date true
+	gsettings set org.gnome.desktop.interface enable-hot-corners false
+	gsettings set org.gnome.desktop.interface show-battery-percentage true
+	gsettings set org.gnome.desktop.interface enable-animations true
+	gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,close'
+
+	gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+	gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 18.0
+	gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to 8.0
+
+	gsettings set org.gnome.desktop.interface clock-format '24h'
+
+	gsettings set org.gnome.desktop.datetime automatic-timezone true
+	timedatectl set-timezone Asia/Yekaterinburg
+
+	# задержка выключения экрана
+	gsettings set org.gnome.desktop.session idle-delay 0
+
+	# автоматическая блокировка экрана
+	gsettings set org.gnome.desktop.screensaver lock-enabled true
+	# задержка автоматической блокировки экрана
+	gsettings set org.gnome.desktop.screensaver lock-delay 1500
+	# блокировка экрана в режиме ожидания
+	gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend true
+
+	# история файлов
+	gsettings set org.gnome.desktop.privacy remember-recent-files false
+	# автоматически удалять файлы в корзине
+	gsettings set org.gnome.desktop.privacy remove-old-trash-files false
+	# автоматически удалять временные файлы
+	gsettings set org.gnome.desktop.privacy remove-old-temp-files false
+	# действие для кнопки выключения
+	gsettings set org.gnome.settings-daemon.plugins.power power-button-action nothing
+
+	# Включить автоматическую систему ожидания после 15 минутов неактивности
+	gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 900
+	gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-timeout 900
+
+	# Отключить автоматическую систему ожидания
+	gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type nothing
+	gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type nothing
+}
+
+configure_aliases() {
+	ALIASES=$(jq -r '.aliases' $CONFIG_FILE)
+	keys=$(echo $ALIASES | jq -r 'keys[]')
+
+	for key in $keys; do
+		value=$(echo $ALIASES | jq -r ".$key")
+		echo "alias $key='$value'" >> ~/.bashrc
+	done
+}
+
 
 ### CONFIGURE APPS
 
@@ -118,16 +193,6 @@ create_venv_python() {
 	python3 -m venv $HOME/$VENV_PATH
 }
 
-add_aliases() {
-	ALIASES=$(jq -r '.aliases' $CONFIG_FILE)
-	keys=$(echo $ALIASES | jq -r 'keys[]')
-
-	for key in $keys; do
-		value=$(echo $ALIASES | jq -r ".$key")
-		echo "alias $key='$value'" >> ~/.bashrc
-	done
-}
-
 
 main() {
 	# delete
@@ -137,6 +202,8 @@ main() {
 
 	# configure_themes_and_icons
 	# configure_hotkeys
+	# configure_dock_panel
+	# configure_aliases
 
 	# configure_megacmd
 	# configure_alacritty
@@ -146,7 +213,6 @@ main() {
 	# download_notes
 
 	# create_venv_python
-	# add_aliases
 }
 
 main

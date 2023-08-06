@@ -33,5 +33,21 @@
 	"aliases": {
 		"backup": "~/programming/scripts/backup/backup.sh",
 		"venv": "source ~/other/env/bin/activate"
+	},
+	"os": {
+		"dock": {
+			"dash-max-icon-size": 46,
+			"dock-position": "bottom",
+			"background-opacity": 0.8,
+			"show-trash": true,
+			"show-mounts": false,
+			"dock-fixed": false,
+			"intellihide": true
+		},
+		"pop-cosmic": {
+			"show-application-menu": true,
+			"show-applications-button": false,
+			"show-workspaces-button": false
+		}
 	}
 }
