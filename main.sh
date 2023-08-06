@@ -184,6 +184,11 @@ configure_vscode() {
 	done
 }
 
+configure_keepassxc() {
+	KEEPASSXC_PATH=$(jq -r '.config.keepassxc' $CONFIG_FILE)
+	cp $KEEPASSXC_PATH "$HOME/.config/keepassxc/keepassxc.ini"
+}
+
 
 ### DOWNLOAD
 
@@ -229,6 +234,7 @@ main() {
 	# configure_git
 	# configure_nautilus
 	# configure_vscode
+	# configure_keepassxc
 
 	# download_folders_from_mega
 	# download_notes
