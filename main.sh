@@ -142,6 +142,21 @@ configure_aliases() {
 	done
 }
 
+configure_favorite_apps() {
+	# gsettings get org.gnome.shell favorite-apps
+	gsettings set org.gnome.shell favorite-apps "[]"
+
+	FAVORITE_APPS=$(jq -r '.apps.favorite[]' $CONFIG_FILE)
+
+	apps_to_favorite=""
+	for app in $FAVORITE_APPS; do
+		apps_to_favorite+=" '$app',"
+	done
+
+	apps_to_favorite="${apps_to_favorite%,}"
+	gsettings set org.gnome.shell favorite-apps "[$apps_to_favorite]"
+}
+
 
 ### CONFIGURE APPS
 
@@ -260,6 +275,7 @@ main() {
 	# configure_pop_cosmic
 	# configure_other
 	# configure_aliases
+	configure_favorite_apps
 
 	# configure_megacmd
 	# configure_alacritty

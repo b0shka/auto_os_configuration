@@ -16,7 +16,8 @@
 	"apps": {
 		"delete": ["gnome-contacts", "gnome-calendar", "baobab", "info", "seahorse", "yelp", "gucharmap", "gnome-font-viewer", "gnome-weather", "com.github.donadigo.eddy", "gnome-power-manager", "popsicle-gtk", "libgl1-mesa-dev", "firefox", "totem", "geary"],
 		"install": ["ssh", "keepassxc", "git", "transmission", "gnome-tweaks", "build-essential", "chrome-gnome-shell", "mat2", "alacritty", "filezilla", "megacmd", "python3-pip", "flatpak", "yandex-browser-stable", "brave-browser", "golang"],
-		"install_flatpak": ["org.telegram.desktop", "md.obsidian.Obsidian", "org.onlyoffice.desktopeditors", "com.getpostman.Postman", "com.visualstudio.code", "com.mongodb.Compassflatpak"]
+		"install_flatpak": ["org.telegram.desktop", "md.obsidian.Obsidian", "org.onlyoffice.desktopeditors", "com.getpostman.Postman", "com.visualstudio.code", "com.mongodb.Compassflatpak"],
+		"favorite": ["com.brave.Browser.desktop", "yandex-browser.desktop", "org.gnome.Nautilus.desktop", "com.alacritty.Alacritty.desktop", "org.telegram.desktop.desktop", "md.obsidian.Obsidian.desktop", "code.desktop", "mongodb-compass.desktop", "org.keepassxc.KeePassXC.desktop", "org.gnome.gedit.desktop", "gnome-system-monitor.desktop", "io.elementary.appcenter.desktop", "pop-cosmic-applications.desktop"]
 	},
 	"mega": {
 		"download_folders": ["personal", "programming", "study", "other"],
