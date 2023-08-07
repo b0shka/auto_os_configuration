@@ -1,5 +1,6 @@
 #! /bin/bash
 
+# sudo apt-get install jq -y
 CONFIG_FILE="config.json"
 ENV_PATH=$(jq -r '.config.env' $CONFIG_FILE)
 
@@ -28,8 +29,27 @@ install_flatpak() {
 	APPS_INSTALL_FLATPAK=$(jq -r '.apps.install_flatpak[]' $CONFIG_FILE)
 
 	for i in ${APPS_INSTALL_FLATPAK[@]}; do
-	  	flatpak install flathub $i
+	  	flatpak install flathub $i -y
 	done
+}
+
+install_megacmd() {
+	MEGA_LINK_DOWNLOAD=$(jq -r '.mega.link_download' $CONFIG_FILE)
+	wget $MEGA_LINK_DOWNLOAD
+
+	MEGA_NAME_FILE=$(jq -r '.mega.name_file' $CONFIG_FILE)
+	sudo chmod 777 $MEGA_NAME_FILE
+	sudo dpkg -i $MEGA_NAME_FILE
+	rm $MEGA_NAME_FILE
+	sudo apt -f install -y
+}
+
+delete_libreoffice() {
+	sudo apt-get remove --purge libreoffice* -y
+	sudo apt-get clean -y
+	sudo apt-get autoremove -y
+
+	rm -r ~/.config/libreoffice
 }
 
 
@@ -48,7 +68,7 @@ configure_themes_and_icons() {
 	# icons
 	ICONS_PATH=$(jq -r '.config.icons.path' $CONFIG_FILE)
 	ICONS_NAME=$(jq -r '.config.icons.name' $CONFIG_FILE)
-
+	
 	sudo mkdir $HOME/.icons
 	sudo chmod 777 $HOME/.icons
 	tar -C $HOME/.icons -xf $HOME/$ICONS_PATH
@@ -70,17 +90,17 @@ configure_dock_panel() {
 	keys=$(echo $DOCK_SETTINGS | jq -r 'keys[]')
 
 	for key in $keys; do
-		value=$(echo $DOCK_SETTINGS | jq -r ".$key")
+		value=$(echo "$DOCK_SETTINGS" | jq -r ".[\"$key\"]")
 		gsettings set org.gnome.shell.extensions.dash-to-dock $key $value
 	done
 }
 
 configure_pop_cosmic() {
-	POP_COSMIC_SETTINGS=$(jq -r '.os.pop-cosmic' $CONFIG_FILE)
+	POP_COSMIC_SETTINGS=$(jq -r '.os.pop_cosmic' $CONFIG_FILE)
 	keys=$(echo $POP_COSMIC_SETTINGS | jq -r 'keys[]')
 
 	for key in $keys; do
-		value=$(echo $POP_COSMIC_SETTINGS | jq -r ".$key")
+		value=$(echo $POP_COSMIC_SETTINGS | jq -r ".[\"$key\"]")
 		gsettings set org.gnome.shell.extensions.pop-cosmic $key $value
 	done
 }
@@ -89,16 +109,16 @@ configure_interface() {
 	OS_INTERFACE=$(jq -r '.os.interface' $CONFIG_FILE)
 	keys=$(echo $OS_INTERFACE | jq -r 'keys[]')
 	for key in $keys; do
-		value=$(echo $OS_INTERFACE | jq -r ".$key")
+		value=$(echo $OS_INTERFACE | jq -r ".[\"$key\"]")
 		gsettings set org.gnome.desktop.interface $key $value
 	done
 }
 
 configure_night_light() {
-	OS_NIGHT_LIGHT=$(jq -r '.os.night-light' $CONFIG_FILE)
+	OS_NIGHT_LIGHT=$(jq -r '.os.night_light' $CONFIG_FILE)
 	keys=$(echo $OS_NIGHT_LIGHT | jq -r 'keys[]')
 	for key in $keys; do
-		value=$(echo $OS_NIGHT_LIGHT | jq -r ".$key")
+		value=$(echo $OS_NIGHT_LIGHT | jq -r ".[\"$key\"]")
 		gsettings set org.gnome.settings-daemon.plugins.color $key $value
 	done
 }
@@ -111,7 +131,7 @@ configure_screensaver() {
 	OS_SCREENSAVER=$(jq -r '.os.screensaver' $CONFIG_FILE)
 	keys=$(echo $OS_SCREENSAVER | jq -r 'keys[]')
 	for key in $keys; do
-		value=$(echo $OS_SCREENSAVER | jq -r ".$key")
+		value=$(echo $OS_SCREENSAVER | jq -r ".[\"$key\"]")
 		gsettings set org.gnome.desktop.screensaver $key $value
 	done
 }
@@ -120,41 +140,41 @@ configure_power() {
 	OS_POWER=$(jq -r '.os.power' $CONFIG_FILE)
 	keys=$(echo $OS_POWER | jq -r 'keys[]')
 	for key in $keys; do
-		value=$(echo $OS_POWER | jq -r ".$key")
+		value=$(echo $OS_POWER | jq -r ".[\"$key\"]")
 		gsettings set org.gnome.settings-daemon.plugins.power $key $value
 	done
 }
 
 configure_privacy() {
-	OS_PRIVACY=$(jq -r '.os.power' $CONFIG_FILE)
+	OS_PRIVACY=$(jq -r '.os.privacy' $CONFIG_FILE)
 	keys=$(echo $OS_PRIVACY | jq -r 'keys[]')
 	for key in $keys; do
-		value=$(echo $OS_PRIVACY | jq -r ".$key")
+		value=$(echo $OS_PRIVACY | jq -r ".[\"$key\"]")
 		gsettings set org.gnome.desktop.privacy $key $value
 	done
 }
 
 configure_other() {
-	OS_BUTTON_LAYOUT=$(jq -r '.os.button-layout' $CONFIG_FILE)
+	OS_BUTTON_LAYOUT=$(jq -r '.os.button_layout' $CONFIG_FILE)
 	gsettings set org.gnome.desktop.wm.preferences button-layout $OS_BUTTON_LAYOUT
 
-	OS_SOUND_ABOVE=$(jq -r '.os.volume-above' $CONFIG_FILE)
+	OS_SOUND_ABOVE=$(jq -r '.os.volume_above' $CONFIG_FILE)
 	gsettings set org.gnome.desktop.sound allow-volume-above-100-percent $OS_SOUND_ABOVE
 
-	OS_FIRST_DAY_WEEK=$(jq -r '.os.first-day-week' $CONFIG_FILE)
+	OS_FIRST_DAY_WEEK=$(jq -r '.os.first_day_week' $CONFIG_FILE)
 	# Установка первого дня недели (0 - воскресенье, 1 - понедельник и т.д.)
 	gsettings set org.gnome.desktop.calendar first-day-of-week $OS_FIRST_DAY_WEEK
 
-	OS_AUTO_TIMEZOME=$(jq -r '.os.automatic-timezone' $CONFIG_FILE)
+	OS_AUTO_TIMEZOME=$(jq -r '.os.automatic_timezone' $CONFIG_FILE)
 	gsettings set org.gnome.desktop.datetime automatic-timezone $OS_AUTO_TIMEZOME
 
 	OS_TIMEZOME=$(jq -r '.os.timezone' $CONFIG_FILE)
 	timedatectl set-timezone $OS_TIMEZOME
 
-	OS_KEYBOARD_LAYOUT=$(jq -r '.os.keyboard-layout' $CONFIG_FILE)
-	gsettings set org.gnome.desktop.input-sources sources $OS_KEYBOARD_LAYOUT
+	OS_KEYBOARD_LAYOUT=$(jq -r '.os.keyboard_layout' $CONFIG_FILE)
+	gsettings set org.gnome.desktop.input-sources sources "$OS_KEYBOARD_LAYOUT"
 
-	OS_SCREEN_SHUTDOWN_DELAY=$(jq -r '.os.screen-shutdown-delay' $CONFIG_FILE)
+	OS_SCREEN_SHUTDOWN_DELAY=$(jq -r '.os.screen_shutdown_delay' $CONFIG_FILE)
 	# задержка выключения экрана
 	gsettings set org.gnome.desktop.session idle-delay $OS_SCREEN_SHUTDOWN_DELAY
 }
@@ -164,7 +184,7 @@ configure_aliases() {
 	keys=$(echo $ALIASES | jq -r 'keys[]')
 
 	for key in $keys; do
-		value=$(echo $ALIASES | jq -r ".$key")
+		value=$(echo $ALIASES | jq -r ".[\"$key\"]")
 		echo "alias $key='$value'" >> ~/.bashrc
 	done
 }
@@ -195,7 +215,7 @@ configure_alacritty() {
 	ALACRITTY_PATH=$(jq -r '.config.alacritty' $CONFIG_FILE)
 	sudo mkdir $HOME/.config/alacritty
 	sudo chmod 777 $HOME/.config/alacritty
-	sudo cp $ALACRITTY_PATH $HOME/.config/alacritty/
+	cp $ALACRITTY_PATH $HOME/.config/alacritty/
 }
 
 configure_git() {
@@ -209,18 +229,18 @@ configure_nautilus() {
 	NAUTILUS_PREFERENCES=$(jq -r '.nautilus.preferences' $CONFIG_FILE)
 	keys=$(echo $NAUTILUS_PREFERENCES | jq -r 'keys[]')
 	for key in $keys; do
-		value=$(echo $NAUTILUS_PREFERENCES | jq -r ".$key")
+		value=$(echo $NAUTILUS_PREFERENCES | jq -r ".[\"$key\"]")
 		gsettings set org.gnome.nautilus.preferences $key $value
 	done
 
-	NAUTILUS_LIST_VIEW=$(jq -r '.nautilus.list-view' $CONFIG_FILE)
+	NAUTILUS_LIST_VIEW=$(jq -r '.nautilus.list_view' $CONFIG_FILE)
 	keys=$(echo $NAUTILUS_LIST_VIEW | jq -r 'keys[]')
 	for key in $keys; do
-		value=$(echo $NAUTILUS_LIST_VIEW | jq -r ".$key")
-		gsettings set org.gnome.nautilus.list-view $key $value
+		value=$(echo $NAUTILUS_LIST_VIEW | jq -r ".[\"$key\"]")
+		gsettings set org.gnome.nautilus.list-view $key "$value"
 	done
 
-	NAUTILUS_COMPRESSION=$(jq -r '.nautilus.compression-format' $CONFIG_FILE)
+	NAUTILUS_COMPRESSION=$(jq -r '.nautilus.compression_format' $CONFIG_FILE)
 	gsettings set org.gnome.nautilus.compression default-compression-format $NAUTILUS_COMPRESSION
 }
 
@@ -236,6 +256,8 @@ configure_vscode() {
 
 configure_keepassxc() {
 	KEEPASSXC_PATH=$(jq -r '.config.keepassxc' $CONFIG_FILE)
+	sudo mkdir $HOME/.config/keepassxc
+	sudo chmod 777 $HOME/.config/keepassxc
 	cp $KEEPASSXC_PATH "$HOME/.config/keepassxc/keepassxc.ini"
 }
 
@@ -243,7 +265,7 @@ configure_gedit() {
 	GEDIT_EDITOR=$(jq -r '.gedit.editor' $CONFIG_FILE)
 	keys=$(echo $GEDIT_EDITOR | jq -r 'keys[]')
 	for key in $keys; do
-		value=$(echo $GEDIT_EDITOR | jq -r ".$key")
+		value=$(echo $GEDIT_EDITOR | jq -r ".[\"$key\"]")
 		gsettings set org.gnome.gedit.preferences.editor $key $value
 	done
 
@@ -251,7 +273,7 @@ configure_gedit() {
 	GEDIT_UI=$(jq -r '.gedit.ui' $CONFIG_FILE)
 	keys=$(echo $GEDIT_UI | jq -r 'keys[]')
 	for key in $keys; do
-		value=$(echo $GEDIT_UI | jq -r ".$key")
+		value=$(echo $GEDIT_UI | jq -r ".[\"$key\"]")
 		gsettings set org.gnome.gedit.preferences.ui $key $value
 	done
 }
@@ -282,11 +304,29 @@ create_venv_python() {
 	python3 -m venv $HOME/$VENV_PATH
 }
 
+remove_extra_files() {
+	EXTRA_FILES=$(jq -r '.files.extra[]' $CONFIG_FILE)
+
+	for i in ${EXTRA_FILES[@]}; do
+	  	sudo rm -r $HOME/$i
+	done
+}
+
+remove_config_files() {
+	CONFIG_FILES=$(jq -r '.files.config[]' $CONFIG_FILE)
+
+	for i in ${CONFIG_FILES[@]}; do
+	  	sudo rm -r $HOME/$i
+	done
+}
+
 
 main() {
 	# delete
 	# install
 	# install_flatpak
+	# install_megacmd
+	# delete_libreoffice
 
 	# configure_themes_and_icons
 	# configure_hotkeys
@@ -313,6 +353,8 @@ main() {
 	# download_notes
 
 	# create_venv_python
+	# remove_extra_files
+	# remove_config_files
 }
 
 main

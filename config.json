@@ -6,17 +6,21 @@
 			"name": "WhiteSur-Dark"
 		},
 		"icons": {
-			"paht": "icons/kora.tar.xz",
+			"path": "icons/kora.tar.xz",
 			"name": "kora"
 		},
 		"alacritty": "config_apps/alacritty.yml",
 		"vscode": "config_apps/settings.json",
 		"keepassxc": "config_apps/keepassxc.ini"
 	},
+	"files": {
+		"config": [".env", "themes", "icons", "config_apps", "config.json"],
+		"extra": ["Видео", "Документы", "Изображения", "Музыка", "Общедоступные", "Шаблоны"]
+	},
 	"apps": {
-		"delete": ["gnome-contacts", "gnome-calendar", "baobab", "info", "seahorse", "yelp", "gucharmap", "gnome-font-viewer", "gnome-weather", "com.github.donadigo.eddy", "gnome-power-manager", "popsicle-gtk", "libgl1-mesa-dev", "firefox", "totem", "geary"],
-		"install": ["ssh", "keepassxc", "git", "transmission", "gnome-tweaks", "build-essential", "chrome-gnome-shell", "mat2", "alacritty", "filezilla", "megacmd", "python3-pip", "flatpak", "yandex-browser-stable", "brave-browser", "golang"],
-		"install_flatpak": ["org.telegram.desktop", "md.obsidian.Obsidian", "org.onlyoffice.desktopeditors", "com.getpostman.Postman", "com.visualstudio.code", "com.mongodb.Compassflatpak"],
+		"delete": ["gnome-contacts", "gnome-calendar", "baobab", "info", "seahorse", "yelp", "gucharmap", "gnome-font-viewer", "gnome-weather", "com.github.donadigo.eddy", "gnome-power-manager", "popsicle-gtk", "libgl1-mesa-dev", "firefox", "geary"],
+		"install": ["ssh", "keepassxc", "git", "transmission", "gnome-tweaks", "build-essential", "chrome-gnome-shell", "mat2", "alacritty", "filezilla", "python3-pip", "python3-venv", "flatpak", "golang", "code"],
+		"install_flatpak": ["org.telegram.desktop", "md.obsidian.Obsidian", "org.onlyoffice.desktopeditors", "com.getpostman.Postman", "com.mongodb.Compass", "com.brave.Browser", "ru.yandex.Browser"],
 		"favorite": ["com.brave.Browser.desktop", "yandex-browser.desktop", "org.gnome.Nautilus.desktop", "com.alacritty.Alacritty.desktop", "org.telegram.desktop.desktop", "md.obsidian.Obsidian.desktop", "code.desktop", "mongodb-compass.desktop", "org.keepassxc.KeePassXC.desktop", "org.gnome.gedit.desktop", "gnome-system-monitor.desktop", "io.elementary.appcenter.desktop", "pop-cosmic-applications.desktop"]
 	},
 	"paths": {
@@ -40,7 +44,7 @@
 			"dock-fixed": false,
 			"intellihide": true
 		},
-		"pop-cosmic": {
+		"pop_cosmic": {
 			"show-application-menu": true,
 			"show-applications-button": false,
 			"show-workspaces-button": false
@@ -52,7 +56,7 @@
 			"enable-animations": true,
 			"clock-format": "24h"
 		},
-		"night-light": {
+		"night_light": {
 			"night-light-enabled": true,
 			"night-light-schedule-from": 21.0,
 			"night-light-schedule-to": 8.0
@@ -72,20 +76,22 @@
 			"remove-old-trash-files": false,
 			"remove-old-temp-files": false
 		},
-		"button-layout": ":minimize,close",
-		"volume-above": true,
-		"first-day-week": 1,
-		"automatic-timezone": true,
+		"button_layout": ":minimize,close",
+		"volume_above": true,
+		"first_day_week": 1,
+		"automatic_timezone": true,
 		"timezone": "Asia/Yekaterinburg",
-		"keyboard-layout": "[('xkb', 'us'), ('xkb', 'ru')]",
-		"screen-shutdown-delay": 0
+		"keyboard_layout": "[('xkb', 'us'), ('xkb', 'ru')]",
+		"screen_shutdown_delay": 0
 	},
 	"mega": {
+		"link_download": "https://mega.nz/linux/repo/xUbuntu_22.04/amd64/megacmd-xUbuntu_22.04_amd64.deb",
+		"name_file": "megacmd-xUbuntu_22.04_amd64.deb",
 		"download_folders": ["personal", "programming", "study", "other"],
 		"exclude_folders": ["node_modules", ".git", ".vscode", ".idea", ".next", "__pycache__"]
 	},
 	"vscode": {
-		"extensions": ["ms-ceintl.vscode-language-pack-ru", "golang.go", "ms-python.python", "juanblanco.solidity"]
+		"extensions": ["ms-ceintl.vscode-language-pack-ru", "golang.go", "juanblanco.solidity"]
 	},
 	"nautilus": {
 		"preferences": {
@@ -93,11 +99,11 @@
 			"show-hidden-files": false,
 			"click-policy": "double"
 		},
-		"list-view": {
+		"list_view": {
 			"default-zoom-level": "small",
 			"default-visible-columns": "['name', 'size']"
 		},
-		"compression-format": "tar.xz"
+		"compression_format": "tar.xz"
 	},
 	"gedit": {
 		"editor": {
