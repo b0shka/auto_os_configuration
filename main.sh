@@ -32,10 +32,6 @@ install_flatpak() {
 	done
 }
 
-install_golang() {
-	echo "install_golang"
-}
-
 
 ### CONFIGURE SYSTEM
 
@@ -60,15 +56,13 @@ configure_themes_and_icons() {
 }
 
 configure_hotkeys() {
-	HOTKEYS=$(jq -r '.hotkeys.keybindings' $CONFIG_FILE)
+	HOTKEYS=$(jq -r '.os.hotkeys' $CONFIG_FILE)
 	keys=$(echo $HOTKEYS | jq -r 'keys[]')
 
 	for key in $keys; do
 		value=$(echo $HOTKEYS | jq -r ".$key")
 		gsettings set org.gnome.desktop.wm.keybindings $key $value
 	done
-
-	# gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Super>AudioPlay']"
 }
 
 configure_dock_panel() {
@@ -91,45 +85,78 @@ configure_pop_cosmic() {
 	done
 }
 
+configure_interface() {
+	OS_INTERFACE=$(jq -r '.os.interface' $CONFIG_FILE)
+	keys=$(echo $OS_INTERFACE | jq -r 'keys[]')
+	for key in $keys; do
+		value=$(echo $OS_INTERFACE | jq -r ".$key")
+		gsettings set org.gnome.desktop.interface $key $value
+	done
+}
+
+configure_night_light() {
+	OS_NIGHT_LIGHT=$(jq -r '.os.night-light' $CONFIG_FILE)
+	keys=$(echo $OS_NIGHT_LIGHT | jq -r 'keys[]')
+	for key in $keys; do
+		value=$(echo $OS_NIGHT_LIGHT | jq -r ".$key")
+		gsettings set org.gnome.settings-daemon.plugins.color $key $value
+	done
+}
+
+configure_screensaver() {
+	# lock-enabled - автоматическая блокировка экрана
+	# lock-delay - задержка автоматической блокировки экрана
+	# ubuntu-lock-on-suspend - блокировка экрана в режиме ожидания
+
+	OS_SCREENSAVER=$(jq -r '.os.screensaver' $CONFIG_FILE)
+	keys=$(echo $OS_SCREENSAVER | jq -r 'keys[]')
+	for key in $keys; do
+		value=$(echo $OS_SCREENSAVER | jq -r ".$key")
+		gsettings set org.gnome.desktop.screensaver $key $value
+	done
+}
+
+configure_power() {
+	OS_POWER=$(jq -r '.os.power' $CONFIG_FILE)
+	keys=$(echo $OS_POWER | jq -r 'keys[]')
+	for key in $keys; do
+		value=$(echo $OS_POWER | jq -r ".$key")
+		gsettings set org.gnome.settings-daemon.plugins.power $key $value
+	done
+}
+
+configure_privacy() {
+	OS_PRIVACY=$(jq -r '.os.power' $CONFIG_FILE)
+	keys=$(echo $OS_PRIVACY | jq -r 'keys[]')
+	for key in $keys; do
+		value=$(echo $OS_PRIVACY | jq -r ".$key")
+		gsettings set org.gnome.desktop.privacy $key $value
+	done
+}
+
 configure_other() {
-	gsettings set org.gnome.desktop.sound allow-volume-above-100-percent true
-	gsettings set org.gnome.desktop.interface clock-show-date true
-	gsettings set org.gnome.desktop.interface enable-hot-corners false
-	gsettings set org.gnome.desktop.interface show-battery-percentage true
-	gsettings set org.gnome.desktop.interface enable-animations true
-	gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,close'
+	OS_BUTTON_LAYOUT=$(jq -r '.os.button-layout' $CONFIG_FILE)
+	gsettings set org.gnome.desktop.wm.preferences button-layout $OS_BUTTON_LAYOUT
 
-	gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
-	gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 21.0
-	gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to 8.0
+	OS_SOUND_ABOVE=$(jq -r '.os.volume-above' $CONFIG_FILE)
+	gsettings set org.gnome.desktop.sound allow-volume-above-100-percent $OS_SOUND_ABOVE
 
-	gsettings set org.gnome.desktop.interface clock-format '24h'
+	OS_FIRST_DAY_WEEK=$(jq -r '.os.first-day-week' $CONFIG_FILE)
+	# Установка первого дня недели (0 - воскресенье, 1 - понедельник и т.д.)
+	gsettings set org.gnome.desktop.calendar first-day-of-week $OS_FIRST_DAY_WEEK
 
-	gsettings set org.gnome.desktop.datetime automatic-timezone true
-	timedatectl set-timezone Asia/Yekaterinburg
+	OS_AUTO_TIMEZOME=$(jq -r '.os.automatic-timezone' $CONFIG_FILE)
+	gsettings set org.gnome.desktop.datetime automatic-timezone $OS_AUTO_TIMEZOME
 
+	OS_TIMEZOME=$(jq -r '.os.timezone' $CONFIG_FILE)
+	timedatectl set-timezone $OS_TIMEZOME
+
+	OS_KEYBOARD_LAYOUT=$(jq -r '.os.keyboard-layout' $CONFIG_FILE)
+	gsettings set org.gnome.desktop.input-sources sources $OS_KEYBOARD_LAYOUT
+
+	OS_SCREEN_SHUTDOWN_DELAY=$(jq -r '.os.screen-shutdown-delay' $CONFIG_FILE)
 	# задержка выключения экрана
-	gsettings set org.gnome.desktop.session idle-delay 0
-
-	# автоматическая блокировка экрана
-	gsettings set org.gnome.desktop.screensaver lock-enabled true
-	# задержка автоматической блокировки экрана
-	gsettings set org.gnome.desktop.screensaver lock-delay 1500
-	# блокировка экрана в режиме ожидания
-	gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend true
-
-	# история файлов
-	gsettings set org.gnome.desktop.privacy remember-recent-files false
-	# автоматически удалять файлы в корзине
-	gsettings set org.gnome.desktop.privacy remove-old-trash-files false
-	# автоматически удалять временные файлы
-	gsettings set org.gnome.desktop.privacy remove-old-temp-files false
-	# действие для кнопки выключения
-	gsettings set org.gnome.settings-daemon.plugins.power power-button-action nothing
-
-	# Отключить автоматическую систему ожидания
-	gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type nothing
-	gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type nothing
+	gsettings set org.gnome.desktop.session idle-delay $OS_SCREEN_SHUTDOWN_DELAY
 }
 
 configure_aliases() {
@@ -179,14 +206,22 @@ configure_git() {
 }
 
 configure_nautilus() {
-	gsettings set org.gnome.nautilus.preferences default-folder-viewer list-view
-	gsettings set org.gnome.nautilus.list-view default-zoom-level small
+	NAUTILUS_PREFERENCES=$(jq -r '.nautilus.preferences' $CONFIG_FILE)
+	keys=$(echo $NAUTILUS_PREFERENCES | jq -r 'keys[]')
+	for key in $keys; do
+		value=$(echo $NAUTILUS_PREFERENCES | jq -r ".$key")
+		gsettings set org.gnome.nautilus.preferences $key $value
+	done
 
-	gsettings set org.gnome.nautilus.preferences show-hidden-files false
-	gsettings set org.gnome.nautilus.preferences click-policy double
-	gsettings set org.gnome.nautilus.compression default-compression-format tar.xz
+	NAUTILUS_LIST_VIEW=$(jq -r '.nautilus.list-view' $CONFIG_FILE)
+	keys=$(echo $NAUTILUS_LIST_VIEW | jq -r 'keys[]')
+	for key in $keys; do
+		value=$(echo $NAUTILUS_LIST_VIEW | jq -r ".$key")
+		gsettings set org.gnome.nautilus.list-view $key $value
+	done
 
-	gsettings set org.gnome.nautilus.list-view default-visible-columns "['name', 'size']"
+	NAUTILUS_COMPRESSION=$(jq -r '.nautilus.compression-format' $CONFIG_FILE)
+	gsettings set org.gnome.nautilus.compression default-compression-format $NAUTILUS_COMPRESSION
 }
 
 configure_vscode() {
@@ -205,35 +240,20 @@ configure_keepassxc() {
 }
 
 configure_gedit() {
-	gsettings set org.gnome.gedit.preferences.editor display-line-numbers false
-	gsettings set org.gnome.gedit.preferences.editor display-right-margin false
-	gsettings set org.gnome.gedit.preferences.ui statusbar-visible false
-	gsettings set org.gnome.gedit.preferences.editor display-overview-map false
-
-	# подсвечивать парные скобки
-	gsettings set org.gnome.gedit.preferences.editor bracket-matching true
-	# подсвечивать строку
-	gsettings set org.gnome.gedit.preferences.editor highlight-current-line false
-
-	# перенос текста
-	gsettings set org.gnome.gedit.preferences.editor wrap-mode word
+	GEDIT_EDITOR=$(jq -r '.gedit.editor' $CONFIG_FILE)
+	keys=$(echo $GEDIT_EDITOR | jq -r 'keys[]')
+	for key in $keys; do
+		value=$(echo $GEDIT_EDITOR | jq -r ".$key")
+		gsettings set org.gnome.gedit.preferences.editor $key $value
+	done
 
 
-	gsettings set org.gnome.gedit.preferences.editor tabs-size 4
-	# вставлять пробелы вместо табуляций
-	gsettings set org.gnome.gedit.preferences.editor insert-spaces false
-	# автоматический отступ
-	gsettings set org.gnome.gedit.preferences.editor auto-indent true
-	# создание запасной копии
-	gsettings set org.gnome.gedit.preferences.editor create-backup-copy false
-	# автоматической сохранение
-	gsettings set org.gnome.gedit.preferences.editor auto-save true
-	# интервал автоматического сохранения
-	gsettings set org.gnome.gedit.preferences.editor auto-save-interval 1
-
-
-	gsettings set org.gnome.gedit.preferences.editor use-default-font true
-	gsettings set org.gnome.gedit.preferences.editor scheme tango
+	GEDIT_UI=$(jq -r '.gedit.ui' $CONFIG_FILE)
+	keys=$(echo $GEDIT_UI | jq -r 'keys[]')
+	for key in $keys; do
+		value=$(echo $GEDIT_UI | jq -r ".$key")
+		gsettings set org.gnome.gedit.preferences.ui $key $value
+	done
 }
 
 
@@ -267,15 +287,19 @@ main() {
 	# delete
 	# install
 	# install_flatpak
-	# install_golang
 
 	# configure_themes_and_icons
 	# configure_hotkeys
 	# configure_dock_panel
 	# configure_pop_cosmic
+	# configure_interface
+	# configure_night_light
+	# configure_screensaver
+	# configure_power
+	# configure_privacy
 	# configure_other
 	# configure_aliases
-	configure_favorite_apps
+	# configure_favorite_apps
 
 	# configure_megacmd
 	# configure_alacritty

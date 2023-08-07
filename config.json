@@ -19,28 +19,21 @@
 		"install_flatpak": ["org.telegram.desktop", "md.obsidian.Obsidian", "org.onlyoffice.desktopeditors", "com.getpostman.Postman", "com.visualstudio.code", "com.mongodb.Compassflatpak"],
 		"favorite": ["com.brave.Browser.desktop", "yandex-browser.desktop", "org.gnome.Nautilus.desktop", "com.alacritty.Alacritty.desktop", "org.telegram.desktop.desktop", "md.obsidian.Obsidian.desktop", "code.desktop", "mongodb-compass.desktop", "org.keepassxc.KeePassXC.desktop", "org.gnome.gedit.desktop", "gnome-system-monitor.desktop", "io.elementary.appcenter.desktop", "pop-cosmic-applications.desktop"]
 	},
-	"mega": {
-		"download_folders": ["personal", "programming", "study", "other"],
-		"exclude_folders": ["node_modules", ".git", ".vscode", ".idea", ".next", "__pycache__"]
-	},
 	"paths": {
 		"notes": "personal/Заметки",
 		"venv": "other/env"
-	},
-	"hotkeys": {
-		"keybindings": {
-			"close": "['<Super>x']",
-			"minimize": "['<Super>z']"
-		}
 	},
 	"aliases": {
 		"backup": "~/programming/scripts/backup/backup.sh",
 		"venv": "source ~/other/env/bin/activate"
 	},
 	"os": {
+		"hotkeys": {
+			"close": "['<Super>x']",
+			"minimize": "['<Super>z']"
+		},
 		"dock": {
-			"dash-max-icon-size": 46,
-			"dock-position": "bottom",
+			"dash-max-icon-size": 45,
 			"background-opacity": 0.8,
 			"show-trash": true,
 			"show-mounts": false,
@@ -51,9 +44,80 @@
 			"show-application-menu": true,
 			"show-applications-button": false,
 			"show-workspaces-button": false
-		}
+		},
+		"interface": {
+			"clock-show-date": true,
+			"enable-hot-corners": false,
+			"show-battery-percentage": true,
+			"enable-animations": true,
+			"clock-format": "24h"
+		},
+		"night-light": {
+			"night-light-enabled": true,
+			"night-light-schedule-from": 21.0,
+			"night-light-schedule-to": 8.0
+		},
+		"screensaver": {
+			"lock-enabled": true,
+			"lock-delay": 1500,
+			"ubuntu-lock-on-suspend": true
+		},
+		"power": {
+			"power-button-action": "nothing",
+			"sleep-inactive-ac-type": "nothing",
+			"sleep-inactive-battery-type": "nothing"
+		},
+		"privacy": {
+			"remember-recent-files": false,
+			"remove-old-trash-files": false,
+			"remove-old-temp-files": false
+		},
+		"button-layout": ":minimize,close",
+		"volume-above": true,
+		"first-day-week": 1,
+		"automatic-timezone": true,
+		"timezone": "Asia/Yekaterinburg",
+		"keyboard-layout": "[('xkb', 'us'), ('xkb', 'ru')]",
+		"screen-shutdown-delay": 0
+	},
+	"mega": {
+		"download_folders": ["personal", "programming", "study", "other"],
+		"exclude_folders": ["node_modules", ".git", ".vscode", ".idea", ".next", "__pycache__"]
 	},
 	"vscode": {
 		"extensions": ["ms-ceintl.vscode-language-pack-ru", "golang.go", "ms-python.python", "juanblanco.solidity"]
+	},
+	"nautilus": {
+		"preferences": {
+			"default-folder-viewer": "list-view",
+			"show-hidden-files": false,
+			"click-policy": "double"
+		},
+		"list-view": {
+			"default-zoom-level": "small",
+			"default-visible-columns": "['name', 'size']"
+		},
+		"compression-format": "tar.xz"
+	},
+	"gedit": {
+		"editor": {
+			"display-line-numbers": false,
+			"display-right-margin": false,
+			"display-overview-map": false,
+			"bracket-matching": true,
+			"highlight-current-line": false,
+			"wrap-mode": "word",
+			"tabs-size": 4,
+			"insert-spaces": false,
+			"auto-indent": true,
+			"create-backup-copy": false,
+			"auto-save": true,
+			"auto-save-interval": 1,
+			"use-default-font": true,
+			"scheme": "tango"
+		},
+		"ui": {
+			"statusbar-visible": false
+		}
 	}
 }
