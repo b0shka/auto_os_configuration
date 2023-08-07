@@ -310,7 +310,7 @@ create_venv_python() {
 }
 
 remove_extra_files() {
-	EXTRA_FILES=$(jq -r '.files.extra[]' $CONFIG_FILE)
+	EXTRA_FILES=$(jq -r '.remove_files.extra[]' $CONFIG_FILE)
 
 	for i in ${EXTRA_FILES[@]}; do
 	  	sudo rm -r $HOME/$i
@@ -318,7 +318,7 @@ remove_extra_files() {
 }
 
 remove_config_files() {
-	CONFIG_FILES=$(jq -r '.files.config[]' $CONFIG_FILE)
+	CONFIG_FILES=$(jq -r '.remove_files.config[]' $CONFIG_FILE)
 
 	for i in ${CONFIG_FILES[@]}; do
 	  	sudo rm -r $HOME/$i
@@ -327,39 +327,39 @@ remove_config_files() {
 
 
 main() {
-	# delete
-	# install
-	# install_flatpak
-	# install_megacmd
-	# delete_libreoffice
+	delete
+	install
+	install_flatpak
+	install_megacmd
+	delete_libreoffice
 
-	# configure_themes_and_icons
-	# configure_hotkeys
-	# configure_dock_panel
-	# configure_pop_cosmic
-	# configure_interface
-	# configure_night_light
-	# configure_screensaver
-	# configure_power
-	# configure_privacy
-	# configure_other
-	# configure_aliases
-	# configure_favorite_apps
+	configure_themes_and_icons
+	configure_hotkeys
+	configure_dock_panel
+	configure_pop_cosmic
+	configure_interface
+	configure_night_light
+	configure_screensaver
+	configure_power
+	configure_privacy
+	configure_other
+	configure_aliases
+	configure_favorite_apps
 
-	# configure_megacmd
-	# configure_alacritty
-	# configure_git
-	# configure_nautilus
-	# configure_vscode
-	# configure_keepassxc
-	# configure_gedit
+	configure_megacmd
+	configure_alacritty
+	configure_git
+	configure_nautilus
+	configure_vscode
+	configure_keepassxc
+	configure_gedit
 
-	# download_folders_from_mega
-	# download_notes
+	download_folders_from_mega
+	download_notes
 
-	# create_venv_python
-	# remove_extra_files
-	# remove_config_files
+	create_venv_python
+	remove_extra_files
+	remove_config_files
 }
 
 main
