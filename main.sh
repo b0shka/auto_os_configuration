@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# sudo apt-get install jq -y
+sudo apt-get install jq -y
 CONFIG_FILE="config.json"
 ENV_PATH=$(jq -r '.config.env' $CONFIG_FILE)
 
@@ -49,7 +49,7 @@ delete_libreoffice() {
 	sudo apt-get clean -y
 	sudo apt-get autoremove -y
 
-	rm -r ~/.config/libreoffice
+	# rm -r ~/.config/libreoffice
 }
 
 
@@ -223,6 +223,11 @@ configure_git() {
 	git config --global user.email $GIT_EMAIL
 	git config --global core.editor code
 	git config --global init.defaultBranch main
+
+	GIT_KEY_PATH=$(jq -r '.config.ssh.git' $CONFIG_FILE)
+	sudo chmod 600 $HOME/$GIT_KEY_PATH
+	GIT_PUB_KEY_PATH=$(jq -r '.config.ssh.git_pub' $CONFIG_FILE)
+	sudo chmod 644 $HOME/$GIT_PUB_KEY_PATH
 }
 
 configure_nautilus() {
@@ -246,7 +251,7 @@ configure_nautilus() {
 
 configure_vscode() {
 	VSCODE_PATH=$(jq -r '.config.vscode' $CONFIG_FILE)
-	cp $VSCODE_PATH "$HOME/.config/Code/User/settings.json"
+	cp $VSCODE_PATH "$HOME/.config/Code/User/"
 
 	VSCODE_EXTENSIONS=$(jq -r '.vscode.extensions[]' $CONFIG_FILE)
 	for i in ${VSCODE_EXTENSIONS[@]}; do
@@ -258,7 +263,7 @@ configure_keepassxc() {
 	KEEPASSXC_PATH=$(jq -r '.config.keepassxc' $CONFIG_FILE)
 	sudo mkdir $HOME/.config/keepassxc
 	sudo chmod 777 $HOME/.config/keepassxc
-	cp $KEEPASSXC_PATH "$HOME/.config/keepassxc/keepassxc.ini"
+	cp $KEEPASSXC_PATH "$HOME/.config/keepassxc/"
 }
 
 configure_gedit() {
