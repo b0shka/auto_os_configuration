@@ -17,6 +17,14 @@ delete() {
 	done
 }
 
+delete_libreoffice() {
+	sudo apt-get remove --purge libreoffice* -y
+	sudo apt-get clean -y
+	sudo apt-get autoremove -y
+
+	# rm -r ~/.config/libreoffice
+}
+
 install() {
 	APPS_INSTALL=$(jq -r '.apps.install[]' $CONFIG_FILE)
 
@@ -42,14 +50,6 @@ install_megacmd() {
 	sudo dpkg -i $MEGA_NAME_FILE
 	rm $MEGA_NAME_FILE
 	sudo apt -f install -y
-}
-
-delete_libreoffice() {
-	sudo apt-get remove --purge libreoffice* -y
-	sudo apt-get clean -y
-	sudo apt-get autoremove -y
-
-	# rm -r ~/.config/libreoffice
 }
 
 
@@ -208,7 +208,11 @@ configure_favorite_apps() {
 ### CONFIGURE APPS
 
 configure_megacmd() {
-    mega-login $MEGA_LOGIN $MEGA_PASSWORD
+    # mega-login $MEGA_LOGIN $MEGA_PASSWORD
+
+	EXCLUDE_FOLDERS=$(jq -r '.mega.exclude_folders[]' $CONFIG_FILE)
+	mega-exclude -d Thumbs.db desktop.ini ~* ".*"
+	mega-exclude -a $EXCLUDE_FOLDERS
 }
 
 configure_alacritty() {
@@ -327,39 +331,39 @@ remove_config_files() {
 
 
 main() {
-	delete
-	delete_libreoffice
-	install
-	install_flatpak
-	install_megacmd
+	# delete
+	# delete_libreoffice
+	# install
+	# install_flatpak
+	# install_megacmd
 
-	configure_themes_and_icons
-	configure_hotkeys
-	configure_dock_panel
-	configure_pop_cosmic
-	configure_interface
-	configure_night_light
-	configure_screensaver
-	configure_power
-	configure_privacy
-	configure_other
-	configure_aliases
-	configure_favorite_apps
+	# configure_themes_and_icons
+	# configure_hotkeys
+	# configure_dock_panel
+	# configure_pop_cosmic
+	# configure_interface
+	# configure_night_light
+	# configure_screensaver
+	# configure_power
+	# configure_privacy
+	# configure_other
+	# configure_aliases
+	# configure_favorite_apps
 
 	configure_megacmd
-	configure_alacritty
-	configure_git
-	configure_nautilus
-	configure_vscode
-	configure_keepassxc
-	configure_gedit
+	# configure_alacritty
+	# configure_git
+	# configure_nautilus
+	# configure_vscode
+	# configure_keepassxc
+	# configure_gedit
 
-	download_folders_from_mega
-	download_notes
+	# download_folders_from_mega
+	# download_notes
 
-	create_venv_python
-	remove_extra_files
-	remove_config_files
+	# create_venv_python
+	# remove_extra_files
+	# remove_config_files
 }
 
 main
