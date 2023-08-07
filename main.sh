@@ -328,10 +328,10 @@ remove_config_files() {
 
 main() {
 	delete
+	delete_libreoffice
 	install
 	install_flatpak
 	install_megacmd
-	delete_libreoffice
 
 	configure_themes_and_icons
 	configure_hotkeys
