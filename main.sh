@@ -189,6 +189,38 @@ configure_keepassxc() {
 	cp $KEEPASSXC_PATH "$HOME/.config/keepassxc/keepassxc.ini"
 }
 
+configure_gedit() {
+	gsettings set org.gnome.gedit.preferences.editor display-line-numbers false
+	gsettings set org.gnome.gedit.preferences.editor display-right-margin false
+	gsettings set org.gnome.gedit.preferences.ui statusbar-visible false
+	gsettings set org.gnome.gedit.preferences.editor display-overview-map false
+
+	# подсвечивать парные скобки
+	gsettings set org.gnome.gedit.preferences.editor bracket-matching true
+	# подсвечивать строку
+	gsettings set org.gnome.gedit.preferences.editor highlight-current-line false
+
+	# перенос текста
+	gsettings set org.gnome.gedit.preferences.editor wrap-mode word
+
+
+	gsettings set org.gnome.gedit.preferences.editor tabs-size 4
+	# вставлять пробелы вместо табуляций
+	gsettings set org.gnome.gedit.preferences.editor insert-spaces false
+	# автоматический отступ
+	gsettings set org.gnome.gedit.preferences.editor auto-indent true
+	# создание запасной копии
+	gsettings set org.gnome.gedit.preferences.editor create-backup-copy false
+	# автоматической сохранение
+	gsettings set org.gnome.gedit.preferences.editor auto-save true
+	# интервал автоматического сохранения
+	gsettings set org.gnome.gedit.preferences.editor auto-save-interval 1
+
+
+	gsettings set org.gnome.gedit.preferences.editor use-default-font true
+	gsettings set org.gnome.gedit.preferences.editor scheme tango
+}
+
 
 ### DOWNLOAD
 
@@ -235,6 +267,7 @@ main() {
 	# configure_nautilus
 	# configure_vscode
 	# configure_keepassxc
+	# configure_gedit
 
 	# download_folders_from_mega
 	# download_notes
