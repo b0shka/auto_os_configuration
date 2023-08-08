@@ -21,7 +21,10 @@
 		"delete": ["gnome-contacts", "gnome-calendar", "baobab", "info", "seahorse", "totem", "yelp", "gucharmap", "gnome-font-viewer", "gnome-weather", "com.github.donadigo.eddy", "gnome-power-manager", "popsicle-gtk", "libgl1-mesa-dev", "firefox", "geary"],
 		"install": ["ssh", "keepassxc", "git", "transmission", "gnome-tweaks", "build-essential", "chrome-gnome-shell", "mat2", "alacritty", "filezilla", "python3-pip", "python3-venv", "flatpak", "golang", "code", "vlc"],
 		"install_flatpak": ["org.telegram.desktop", "md.obsidian.Obsidian", "org.onlyoffice.desktopeditors", "com.getpostman.Postman", "com.mongodb.Compass", "com.brave.Browser", "ru.yandex.Browser"],
-		"favorite": ["com.brave.Browser.desktop", "ru.yandex.Browser.desktop", "org.gnome.Nautilus.desktop", "com.alacritty.Alacritty.desktop", "org.telegram.desktop.desktop", "md.obsidian.Obsidian.desktop", "code.desktop", "org.keepassxc.KeePassXC.desktop", "org.gnome.gedit.desktop", "com.mongodb.Compass.desktop", "gnome-system-monitor.desktop", "io.elementary.appcenter.desktop", "pop-cosmic-applications.desktop"]
+		"favorite": ["com.brave.Browser.desktop", "ru.yandex.Browser.desktop", "org.gnome.Nautilus.desktop", "com.alacritty.Alacritty.desktop", "org.telegram.desktop.desktop", "md.obsidian.Obsidian.desktop", "code.desktop", "org.keepassxc.KeePassXC.desktop", "org.gnome.gedit.desktop", "com.mongodb.Compass.desktop", "gnome-system-monitor.desktop", "io.elementary.appcenter.desktop", "pop-cosmic-applications.desktop"],
+		"default": {
+			"default-web-browser": "com.brave.Browser.desktop"
+		}
 	},
 	"paths": {
 		"notes": "personal/Заметки",

@@ -154,31 +154,6 @@ configure_privacy() {
 	done
 }
 
-configure_other() {
-	OS_BUTTON_LAYOUT=$(jq -r '.os.button_layout' $CONFIG_FILE)
-	gsettings set org.gnome.desktop.wm.preferences button-layout $OS_BUTTON_LAYOUT
-
-	OS_SOUND_ABOVE=$(jq -r '.os.volume_above' $CONFIG_FILE)
-	gsettings set org.gnome.desktop.sound allow-volume-above-100-percent $OS_SOUND_ABOVE
-
-	OS_FIRST_DAY_WEEK=$(jq -r '.os.first_day_week' $CONFIG_FILE)
-	# Установка первого дня недели (0 - воскресенье, 1 - понедельник и т.д.)
-	gsettings set org.gnome.desktop.calendar first-day-of-week $OS_FIRST_DAY_WEEK
-
-	OS_AUTO_TIMEZOME=$(jq -r '.os.automatic_timezone' $CONFIG_FILE)
-	gsettings set org.gnome.desktop.datetime automatic-timezone $OS_AUTO_TIMEZOME
-
-	OS_TIMEZOME=$(jq -r '.os.timezone' $CONFIG_FILE)
-	timedatectl set-timezone $OS_TIMEZOME
-
-	OS_KEYBOARD_LAYOUT=$(jq -r '.os.keyboard_layout' $CONFIG_FILE)
-	gsettings set org.gnome.desktop.input-sources sources "$OS_KEYBOARD_LAYOUT"
-
-	OS_SCREEN_SHUTDOWN_DELAY=$(jq -r '.os.screen_shutdown_delay' $CONFIG_FILE)
-	# задержка выключения экрана
-	gsettings set org.gnome.desktop.session idle-delay $OS_SCREEN_SHUTDOWN_DELAY
-}
-
 configure_aliases() {
 	ALIASES=$(jq -r '.aliases' $CONFIG_FILE)
 	keys=$(echo $ALIASES | jq -r 'keys[]')
@@ -202,6 +177,43 @@ configure_favorite_apps() {
 
 	apps_to_favorite="${apps_to_favorite%,}"
 	gsettings set org.gnome.shell favorite-apps "[$apps_to_favorite]"
+}
+
+configure_default_apps() {
+	DEFAULT_APPS=$(jq -r '.apps.default' $CONFIG_FILE)
+	keys=$(echo $DEFAULT_APPS | jq -r 'keys[]')
+
+	for key in $keys; do
+		value=$(echo $DEFAULT_APPS | jq -r ".[\"$key\"]")
+		xdg-settings set $key $value
+	done
+}
+
+configure_other() {
+	OS_BUTTON_LAYOUT=$(jq -r '.os.button_layout' $CONFIG_FILE)
+	gsettings set org.gnome.desktop.wm.preferences button-layout $OS_BUTTON_LAYOUT
+
+	OS_SOUND_ABOVE=$(jq -r '.os.volume_above' $CONFIG_FILE)
+	gsettings set org.gnome.desktop.sound allow-volume-above-100-percent $OS_SOUND_ABOVE
+
+	OS_FIRST_DAY_WEEK=$(jq -r '.os.first_day_week' $CONFIG_FILE)
+	# Установка первого дня недели (0 - воскресенье, 1 - понедельник и т.д.)
+	gsettings set org.gnome.desktop.calendar first-day-of-week $OS_FIRST_DAY_WEEK
+
+	OS_AUTO_TIMEZOME=$(jq -r '.os.automatic_timezone' $CONFIG_FILE)
+	gsettings set org.gnome.desktop.datetime automatic-timezone $OS_AUTO_TIMEZOME
+
+	OS_TIMEZOME=$(jq -r '.os.timezone' $CONFIG_FILE)
+	timedatectl set-timezone $OS_TIMEZOME
+
+	OS_KEYBOARD_LAYOUT=$(jq -r '.os.keyboard_layout' $CONFIG_FILE)
+	gsettings set org.gnome.desktop.input-sources sources "$OS_KEYBOARD_LAYOUT"
+
+	OS_SCREEN_SHUTDOWN_DELAY=$(jq -r '.os.screen_shutdown_delay' $CONFIG_FILE)
+	# задержка выключения экрана
+	gsettings set org.gnome.desktop.session idle-delay $OS_SCREEN_SHUTDOWN_DELAY
+
+	sudo rm /usr/share/applications/io.elementary.appcenter-daemon.desktop
 }
 
 
@@ -346,9 +358,10 @@ main() {
 	configure_screensaver
 	configure_power
 	configure_privacy
-	configure_other
 	configure_aliases
 	configure_favorite_apps
+	configure_default_apps
+	configure_other
 
 	configure_megacmd
 	configure_alacritty
