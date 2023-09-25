@@ -52,6 +52,77 @@ install_megacmd() {
 	sudo apt -f install -y
 }
 
+install_backend_tools() {
+	install_golang
+	install_docker
+	install_docker_containers
+	install_tableplus
+
+	# sqlc
+	go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
+
+	# migrate
+	VERSION_MIGRATE=$(jq -r '.apps.versions_backend_tools.migrate' $CONFIG_FILE)
+	curl -L https://github.com/golang-migrate/migrate/releases/download/$VERSION_MIGRATE/migrate.linux-amd64.tar.gz | tar xvz
+	sudo mv migrate /usr/bin/migrate
+
+	# mockgen
+	sudo apt-get -y install mockgen
+
+	# swag
+	go install github.com/swaggo/swag/cmd/swag@latest
+
+	# golangci-lint
+	VERSION_GOLANGCI_LINT=$(jq -r '.apps.versions_backend_tools.golangci-lint' $CONFIG_FILE)
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin $VERSION_GOLANGCI_LINT
+}
+
+install_golang() {
+	VERSION_GOLANG=$(jq -r '.apps.versions_backend_tools.golang' $CONFIG_FILE)
+	wget https://go.dev/dl/go$VERSION_GOLANG.linux-amd64.tar.gz
+	sudo rm -rf /usr/local/go
+	sudo tar -C /usr/local -xzf go$VERSION_GOLANG.linux-amd64.tar.gz
+
+	export PATH=$PATH:/usr/local/go/bin
+	export PATH=$PATH:$HOME/go/bin
+}
+
+install_docker() {
+	sudo apt-get update
+	sudo apt-get install ca-certificates curl gnupg
+
+	sudo install -m 0755 -d /etc/apt/keyrings
+	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+	sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+	echo \
+	"deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+	"$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+	sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+	sudo apt-get update
+	sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+	sudo groupadd docker
+	sudo usermod -aG docker $USER
+	newgrp docker
+	sudo chmod 666 /var/run/docker.sock
+}
+
+install_docker_containers() {
+	docker pull postgres:15-alpine
+	docker pull redis:7-alpine
+}
+
+install_tableplus() {
+	wget -qO - https://deb.tableplus.com/apt.tableplus.com.gpg.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/tableplus-archive.gpg > /dev/null
+
+	sudo add-apt-repository "deb [arch=amd64] https://deb.tableplus.com/debian/22 tableplus main"
+
+	sudo apt update
+	sudo apt install tableplus
+}
+
 
 ### CONFIGURE SYSTEM
 
@@ -348,6 +419,7 @@ main() {
 	install
 	install_flatpak
 	install_megacmd
+	install_backend_tools
 
 	configure_themes_and_icons
 	configure_hotkeys
