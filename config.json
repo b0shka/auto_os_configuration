@@ -19,9 +19,9 @@
 	},
 	"apps": {
 		"delete": ["gnome-contacts", "gnome-calendar", "baobab", "info", "seahorse", "totem", "yelp", "gucharmap", "gnome-font-viewer", "gnome-weather", "com.github.donadigo.eddy", "gnome-power-manager", "popsicle-gtk", "libgl1-mesa-dev", "firefox", "geary"],
-		"install": ["ssh", "keepassxc", "git", "transmission", "gnome-tweaks", "build-essential", "chrome-gnome-shell", "mat2", "alacritty", "filezilla", "python3-pip", "python3-venv", "flatpak", "golang", "code", "vlc", "npm"],
-		"install_flatpak": ["org.telegram.desktop", "md.obsidian.Obsidian", "org.onlyoffice.desktopeditors", "com.getpostman.Postman", "com.mongodb.Compass", "com.brave.Browser", "ru.yandex.Browser"],
-		"favorite": ["com.brave.Browser.desktop", "ru.yandex.Browser.desktop", "org.gnome.Nautilus.desktop", "com.alacritty.Alacritty.desktop", "org.telegram.desktop.desktop", "md.obsidian.Obsidian.desktop", "code.desktop", "org.keepassxc.KeePassXC.desktop", "org.gnome.gedit.desktop", "com.mongodb.Compass.desktop", "gnome-system-monitor.desktop", "io.elementary.appcenter.desktop", "pop-cosmic-applications.desktop"],
+		"install": ["ssh", "keepassxc", "git", "transmission", "gnome-tweaks", "build-essential", "chrome-gnome-shell", "mat2", "alacritty", "filezilla", "python3-pip", "python3-venv", "flatpak", "code", "vlc", "npm"],
+		"install_flatpak": ["org.telegram.desktop", "md.obsidian.Obsidian", "com.wps.Office", "com.getpostman.Postman", "com.mongodb.Compass", "com.brave.Browser", "ru.yandex.Browser", "com.todoist.Todoist"],
+		"favorite": ["com.brave.Browser.desktop", "ru.yandex.Browser.desktop", "org.gnome.Nautilus.desktop", "com.alacritty.Alacritty.desktop", "org.telegram.desktop.desktop", "com.todoist.Todoist.desktop", "md.obsidian.Obsidian.desktop", "code.desktop", "com.getpostman.Postman.desktop", "org.keepassxc.KeePassXC.desktop", "org.gnome.gedit.desktop", "gnome-system-monitor.desktop", "io.elementary.appcenter.desktop", "pop-cosmic-applications.desktop"],
 		"default": {
 			"default-web-browser": "com.brave.Browser.desktop"
 		},
@@ -33,11 +33,11 @@
 	},
 	"paths": {
 		"notes": "personal/Заметки",
-		"venv": "other/env"
+		"venv": "resources/env"
 	},
 	"aliases": {
 		"backup": "~/programming/scripts/backup/backup.sh",
-		"venv": "source ~/other/env/bin/activate"
+		"venv": "source ~/resources/env/bin/activate"
 	},
 	"os": {
 		"hotkeys": {
@@ -96,11 +96,12 @@
 	"mega": {
 		"link_download": "https://mega.nz/linux/repo/xUbuntu_22.04/amd64/megacmd-xUbuntu_22.04_amd64.deb",
 		"name_file": "megacmd-xUbuntu_22.04_amd64.deb",
-		"download_folders": ["personal", "programming", "study", "other"],
+		"backup_name": "backup.tar.xz",
+		"download_folders": ["inbox", "personal", "programming", "study", "resources"],
 		"exclude_folders": ["node_modules", ".git", ".vscode", ".idea", ".next", "__pycache__"]
 	},
 	"vscode": {
-		"extensions": ["ms-ceintl.vscode-language-pack-ru", "golang.go", "juanblanco.solidity"]
+		"extensions": ["Codeium.codeium", "dsznajder.es7-react-js-snippets", "golang.go", "Gruntfuggly.todo-tree", "MS-CEINTL.vscode-language-pack-ru", "TabNine.tabnine-vscode", "vscode-icons-team.vscode-icons"]
 	},
 	"nautilus": {
 		"preferences": {

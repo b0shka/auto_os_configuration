@@ -374,11 +374,17 @@ configure_gedit() {
 ### DOWNLOAD
 
 download_folders_from_mega() {
-	MEGA_DOWNLOAD_FOLDERS=$(jq -r '.mega.download_folders[]' $CONFIG_FILE)
+	# MEGA_DOWNLOAD_FOLDERS=$(jq -r '.mega.download_folders[]' $CONFIG_FILE)
 
-	for i in ${MEGA_DOWNLOAD_FOLDERS[@]}; do
-	  	mega-get /$i $HOME
-	done
+	# for i in ${MEGA_DOWNLOAD_FOLDERS[@]}; do
+	#   	mega-get /$i $HOME
+	# done
+
+	MEGA_BACKUP_NAME=$(jq -r '.mega.backup_name[]' $CONFIG_FILE)
+
+	mega-get /$MEGA_BACKUP_NAME $HOME
+	tar xf $HOME/$MEGA_BACKUP_NAME -C $HOME
+	rm $HOME/$MEGA_BACKUP_NAME
 }
 
 download_notes() {
