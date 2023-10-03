@@ -1,0 +1,60 @@
+{
+    // Main editor settings
+    "editor.tabSize": 4,
+    "editor.wordWrap": "on",
+    // "editor.folding": false,
+    "editor.insertSpaces": false,
+    "editor.smoothScrolling": true,
+    "editor.minimap.enabled": false,
+    "editor.detectIndentation": true,
+    "editor.suggestSelection": "first",
+    "editor.scrollBeyondLastLine": true,
+    "editor.multiCursorModifier": "alt",
+    "editor.renderControlCharacters": false,
+    "breadcrumbs.enabled": false,
+    "window.menuBarVisibility": "toggle",
+    "security.workspace.trust.untrustedFiles": "open",
+    // Appearance
+    "editor.cursorBlinking": "expand",
+    "editor.bracketPairColorization.enabled": true,
+    // "editor.glyphMargin": false,
+    "editor.scrollbar.horizontal": "hidden",
+    // "editor.scrollbar.vertical": "hidden",
+    // Font
+    "editor.fontSize": 13,
+    "editor.lineHeight": 19,
+    "editor.fontLigatures": true,
+    // Terminal
+    "terminal.integrated.fontSize": 15,
+    "terminal.integrated.tabs.enabled": false,
+    // Explorer
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+    "explorer.compactFolders": false,
+    // Emmet
+    "emmet.triggerExpansionOnTab": true,
+    "emmet.showExpandedAbbreviation": "never",
+    // Workbench
+    "workbench.colorTheme": "Default Dark Modern",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.editor.tabSizing": "shrink",
+    "workbench.layoutControl.enabled": false,
+    // "workbench.activityBar.visible": false,
+    "workbench.startupEditor": "none",
+    // Format
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    // Spell checker
+    "cSpell.language": "en,ru",
+    "cSpell.enabled": true,
+    // AI
+    "tabnine.experimentalAutoImports": true,
+    "codeium.enableConfig": {
+        "*": true
+    },
+    // Other
+    "files.defaultLanguage": "plaintext",
+}
