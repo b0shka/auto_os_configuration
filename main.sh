@@ -346,16 +346,16 @@ configure_nautilus() {
 }
 
 configure_vscode() {
+	VSCODE_EXTENSIONS=$(jq -r '.vscode.extensions[]' $CONFIG_FILE)
+	for i in ${VSCODE_EXTENSIONS[@]}; do
+	  	code --install-extension $i
+	done
+
 	VSCODE_SETTINGS_PATH=$(jq -r '.config.vscode.settings' $CONFIG_FILE)
 	VSCODE_KEYBINDINGS_PATH=$(jq -r '.config.vscode.keybindings' $CONFIG_FILE)
 
 	cp $VSCODE_SETTINGS_PATH "$HOME/.config/Code/User/"
 	cp $VSCODE_KEYBINDINGS_PATH "$HOME/.config/Code/User/"
-
-	VSCODE_EXTENSIONS=$(jq -r '.vscode.extensions[]' $CONFIG_FILE)
-	for i in ${VSCODE_EXTENSIONS[@]}; do
-	  	code --install-extension $i
-	done
 }
 
 configure_keepassxc() {
@@ -433,7 +433,7 @@ remove_config_files() {
 
 main() {
 	delete
-	delete_libreoffice
+	# delete_libreoffice
 	install
 	install_flatpak
 	install_megacmd
