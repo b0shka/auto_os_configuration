@@ -413,9 +413,11 @@ configure_zsh() {
 }
 
 configure_tmux() {
-	TMUX_CONFIG_PATH=$(jq -r '.config.tmux' $CONFIG_FILE)
-	cp $TMUX_CONFIG_PATH "$HOME/.tmux.conf"
-	tmux source-file ~/.tmux.conf
+	TMUX_PATH=$(jq -r '.config.tmux' $CONFIG_FILE)
+	sudo mkdir $HOME/.config/tmux
+	sudo chmod 777 $HOME/.config/tmux
+	cp $TMUX_PATH "$HOME/.config/tmux/"
+	tmux source ~/.tmux.conf
 }
 
 
