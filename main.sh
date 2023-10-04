@@ -344,6 +344,11 @@ configure_nautilus() {
 
 	NAUTILUS_COMPRESSION=$(jq -r '.nautilus.compression_format' $CONFIG_FILE)
 	gsettings set org.gnome.nautilus.compression default-compression-format $NAUTILUS_COMPRESSION
+
+	# FAVORITE_FOLDERS=$(jq -r '.nautilus.favorite_folders[]' $CONFIG_FILE)
+	# for i in ${FAVORITE_FOLDERS[@]}; do
+	  	
+	# done
 }
 
 configure_vscode() {
@@ -411,12 +416,6 @@ configure_zsh() {
 ### DOWNLOAD
 
 download_folders_from_mega() {
-	# MEGA_DOWNLOAD_FOLDERS=$(jq -r '.mega.download_folders[]' $CONFIG_FILE)
-
-	# for i in ${MEGA_DOWNLOAD_FOLDERS[@]}; do
-	#   	mega-get /$i $HOME
-	# done
-
 	MEGA_BACKUP_NAME=$(jq -r '.mega.backup_name' $CONFIG_FILE)
 
 	mega-get /$MEGA_BACKUP_NAME $HOME
@@ -495,6 +494,4 @@ main() {
 	remove_config_files
 }
 
-# main
-
-configure_zsh
+main

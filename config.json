@@ -168,13 +168,6 @@
 		"link_download": "https://mega.nz/linux/repo/xUbuntu_22.04/amd64/megacmd-xUbuntu_22.04_amd64.deb",
 		"name_file": "megacmd-xUbuntu_22.04_amd64.deb",
 		"backup_name": "backup.tar.xz",
-		"download_folders": [
-			"inbox",
-			"personal",
-			"programming",
-			"study",
-			"resources"
-		],
 		"exclude_folders": [
 			"node_modules",
 			".git",
@@ -231,7 +224,14 @@
 			"default-zoom-level": "small",
 			"default-visible-columns": "['name', 'size']"
 		},
-		"compression_format": "tar.xz"
+		"compression_format": "tar.xz",
+		"favorite_folders": [
+			"inbox",
+			"personal",
+			"programming",
+			"study",
+			"resources"
+		]
 	},
 	"gedit": {
 		"editor": {
