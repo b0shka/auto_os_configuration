@@ -55,7 +55,7 @@
 			"flatpak",
 			"code",
 			"vlc",
-			"npm"
+			"zsh"
 		],
 		"install_flatpak": [
 			"org.telegram.desktop",
@@ -97,6 +97,16 @@
 		"venv": "resources/env"
 	},
 	"aliases": {
+		"i": "sudo apt-get install",
+		"u": "sudo apt-get update",
+		"c": "clear",
+		"d": "docker",
+		"di": "docker images",
+		"dc": "docker ps",
+		"dca": "docker ps -a",
+		"ds": "docker stop",
+		"dr": "docker rm",
+		"dri": "docker rmi",
 		"backup": "~/programming/scripts/backup/backup.sh",
 		"venv": "source ~/resources/env/bin/activate"
 	},
@@ -186,6 +196,29 @@
 			"streetsidesoftware.code-spell-checker",
 			"streetsidesoftware.code-spell-checker-russian",
 			"TabNine.tabnine-vscode"
+		]
+	},
+	"zsh": {
+		"theme": "gozilla",
+		"plugins": [
+			"git",
+			"zsh-autosuggestions",
+			"sudo",
+			"copypath",
+			"copyfile",
+			"dirhistory",
+			"history",
+			"jsontools",
+			"auto-notify",
+			"you-should-use"
+		],
+		"plugins_link_git": {
+			"zsh-autosuggestions": "https://github.com/zsh-users/zsh-autosuggestions",
+			"auto-notify": "https://github.com/MichaelAquilina/zsh-auto-notify.git",
+			"you-should-use": "https://github.com/MichaelAquilina/zsh-you-should-use.git"
+		},
+		"notify_ignore": [
+			"docker"
 		]
 	},
 	"nautilus": {

@@ -241,6 +241,7 @@ configure_aliases() {
 	for key in $keys; do
 		value=$(echo $ALIASES | jq -r ".[\"$key\"]")
 		echo "alias $key='$value'" >> ~/.bashrc
+		echo "alias $key='$value'" >> ~/.zshrc
 	done
 }
 
@@ -382,6 +383,30 @@ configure_gedit() {
 	done
 }
 
+configure_zsh() {
+	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+	ZSH_THEME=$(jq -r '.zsh.theme' $CONFIG_FILE)
+	sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"$ZSH_THEME\"/" ~/.zshrc
+
+	ZSH_PLUGINS=$(jq -r '.zsh.plugins[]' $CONFIG_FILE)
+	formatted_plugins=$(printf "%s " $ZSH_PLUGINS)
+	sed -i "s/plugins=(git)/plugins=($formatted_plugins)/"  ~/.zshrc
+
+	ZSH_PLUGINS_GIT=$(jq -r '.zsh.plugins_link_git' $CONFIG_FILE)
+	keys=$(echo $ZSH_PLUGINS_GIT | jq -r 'keys[]')
+	for key in $keys; do
+		value=$(echo $ZSH_PLUGINS_GIT | jq -r ".[\"$key\"]")
+		sudo git clone $value $ZSH_CUSTOM/plugins/$key
+	done
+
+	ZSH_NOTIFY_IGNORE=$(jq -r '.zsh.notify_ignore[]' $CONFIG_FILE)
+	formatted_notify_ignore=$(printf '"%s" ' $ZSH_NOTIFY_IGNORE)
+	echo "AUTO_NOTIFY_IGNORE+=($formatted_notify_ignore)" >> ~/.zshrc
+
+	source ~/.zshrc
+}
+
 
 ### DOWNLOAD
 
@@ -392,7 +417,7 @@ download_folders_from_mega() {
 	#   	mega-get /$i $HOME
 	# done
 
-	MEGA_BACKUP_NAME=$(jq -r '.mega.backup_name[]' $CONFIG_FILE)
+	MEGA_BACKUP_NAME=$(jq -r '.mega.backup_name' $CONFIG_FILE)
 
 	mega-get /$MEGA_BACKUP_NAME $HOME
 	tar xf $HOME/$MEGA_BACKUP_NAME -C $HOME
@@ -451,6 +476,7 @@ main() {
 	configure_aliases
 	configure_favorite_apps
 	configure_default_apps
+	configure_zsh
 	configure_other
 
 	configure_megacmd
@@ -469,4 +495,6 @@ main() {
 	remove_config_files
 }
 
-main
+# main
+
+configure_zsh
