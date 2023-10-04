@@ -55,7 +55,8 @@
 			"flatpak",
 			"code",
 			"vlc",
-			"zsh"
+			"zsh",
+			"exa"
 		],
 		"install_flatpak": [
 			"org.telegram.desktop",
@@ -107,6 +108,9 @@
 		"ds": "docker stop",
 		"dr": "docker rm",
 		"dri": "docker rmi",
+		"ls": "exa",
+		"l": "exa --long --all --group",
+		"lt": "exa --tree --level=2",
 		"backup": "~/programming/scripts/backup/backup.sh",
 		"venv": "source ~/resources/env/bin/activate"
 	},
