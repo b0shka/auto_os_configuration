@@ -412,6 +412,12 @@ configure_zsh() {
 	source ~/.zshrc
 }
 
+configure_tmux() {
+	TMUX_CONFIG_PATH=$(jq -r '.config.tmux' $CONFIG_FILE)
+	cp $TMUX_CONFIG_PATH "$HOME/.tmux.conf"
+	tmux source-file ~/.tmux.conf
+}
+
 
 ### DOWNLOAD
 
@@ -476,6 +482,7 @@ main() {
 	configure_favorite_apps
 	configure_default_apps
 	configure_zsh
+	configure_tmux
 	configure_other
 
 	configure_megacmd
