@@ -315,6 +315,13 @@ configure_alacritty() {
 	cp $ALACRITTY_PATH $HOME/.config/alacritty/
 }
 
+configure_kitty() {
+	KITTY_PATH=$(jq -r '.config.kitty' $CONFIG_FILE)
+	sudo mkdir $HOME/.config/kitty
+	sudo chmod 777 $HOME/.config/kitty
+	cp $KITTY_PATH $HOME/.config/kitty/
+}
+
 configure_git() {
 	git config --global user.name $GIT_LOGIN
 	git config --global user.email $GIT_EMAIL
@@ -493,7 +500,8 @@ main() {
 	configure_other
 
 	configure_megacmd
-	configure_alacritty
+	# configure_alacritty
+	configure_kitty
 	configure_git
 	configure_nautilus
 	configure_vscode

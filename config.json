@@ -14,6 +14,7 @@
 			"git_pub": ".ssh/git.pub"
 		},
 		"alacritty": "config_apps/alacritty.yml",
+		"kitty": "kitty.conf",
 		"vscode": {
 			"settings": "config_apps/vscode/settings.json",
 			"keybindings": "config_apps/vscode/keybindings.json"
@@ -49,7 +50,7 @@
 			"build-essential",
 			"chrome-gnome-shell",
 			"mat2",
-			"alacritty",
+			"kitty",
 			"filezilla",
 			"python3-pip",
 			"python3-venv",
