@@ -419,10 +419,10 @@ configure_tmux() {
 	cp $TMUX_PATH $HOME/.config/tmux/tmux.conf
 	tmux source $HOME/.config/tmux/tmux.conf
 
-	sudo mkdir $HOME/.tmux
-	sudo chmod 777 $HOME/.tmux
-	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-	~/.tmux/plugins/tpm/scripts/install_plugins.sh
+	# sudo mkdir $HOME/.tmux
+	# sudo chmod 777 $HOME/.tmux
+	git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+	~/.config/tmux/plugins/tpm/scripts/install_plugins.sh
 }
 
 
