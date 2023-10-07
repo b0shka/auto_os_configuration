@@ -101,8 +101,11 @@
 	},
 	"aliases": {
 		"i": "sudo apt-get install",
+		"ideb": "sudo dpkg -i",
 		"u": "sudo apt-get update",
+		"r": "sudo apt-get remove",
 		"c": "clear",
+		"clean": "sudo apt-get autoclean && sudo apt-get autoremove",
 		"d": "docker",
 		"di": "docker images",
 		"dc": "docker ps",

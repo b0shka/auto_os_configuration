@@ -75,6 +75,9 @@ live_config_reload: true
 shell:
   program: /usr/bin/zsh
 
+env:
+  TERM: xterm-256color
+
 key_bindings:
   - { key: Back, mods: Control, chars: "\x15" }
   - { key: Left, mods: Control, chars: "\eb" }
