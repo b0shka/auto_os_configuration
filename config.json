@@ -71,6 +71,10 @@
 			"ru.yandex.Browser",
 			"com.todoist.Todoist"
 		],
+		"install_deb": {
+			"mega": "https://mega.nz/linux/repo/xUbuntu_22.04/amd64/megacmd-xUbuntu_22.04_amd64.deb",
+			"anytype": "https://download.anytype.io/?action=download&key=desktop&id=127051615"
+		},
 		"favorite": [
 			"com.brave.Browser.desktop",
 			"ru.yandex.Browser.desktop",
@@ -175,8 +179,6 @@
 		"screen_shutdown_delay": 0
 	},
 	"mega": {
-		"link_download": "https://mega.nz/linux/repo/xUbuntu_22.04/amd64/megacmd-xUbuntu_22.04_amd64.deb",
-		"name_file": "megacmd-xUbuntu_22.04_amd64.deb",
 		"backup_name": "backup.tar.xz",
 		"exclude_folders": [
 			"node_modules",

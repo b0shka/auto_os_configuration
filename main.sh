@@ -41,15 +41,18 @@ install_flatpak() {
 	done
 }
 
-install_megacmd() {
-	MEGA_LINK_DOWNLOAD=$(jq -r '.mega.link_download' $CONFIG_FILE)
-	wget $MEGA_LINK_DOWNLOAD
+install_deb() {
+	LINKS_DOWNLOAD=$(jq -r '.apps.install_deb' $CONFIG_FILE)
+	keys=$(echo $LINKS_DOWNLOAD | jq -r 'keys[]')
 
-	MEGA_NAME_FILE=$(jq -r '.mega.name_file' $CONFIG_FILE)
-	sudo chmod 777 $MEGA_NAME_FILE
-	sudo dpkg -i $MEGA_NAME_FILE
-	rm $MEGA_NAME_FILE
-	sudo apt -f install -y
+	for key in $keys; do
+		value=$(echo $LINKS_DOWNLOAD | jq -r ".[\"$key\"]")
+		wget $value -O $key.deb
+		sudo chmod 777 $key.deb
+		sudo dpkg -i $key.deb
+		rm $key.deb
+		sudo apt -f install -y
+	done
 }
 
 install_backend_tools() {
@@ -480,7 +483,7 @@ main() {
 	# delete_libreoffice
 	install
 	install_flatpak
-	install_megacmd
+	install_deb
 	install_backend_tools
 
 	configure_themes_and_icons
