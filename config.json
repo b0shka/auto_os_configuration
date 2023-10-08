@@ -14,7 +14,7 @@
 			"git_pub": ".ssh/git.pub"
 		},
 		"alacritty": "config_apps/alacritty.yml",
-		"kitty": "kitty.conf",
+		"kitty": "config_apps/kitty.conf",
 		"vscode": {
 			"settings": "config_apps/vscode/settings.json",
 			"keybindings": "config_apps/vscode/keybindings.json"
@@ -64,7 +64,7 @@
 		"install_flatpak": [
 			"org.telegram.desktop",
 			"md.obsidian.Obsidian",
-			"com.wps.Office",
+			"org.onlyoffice.desktopeditors",
 			"com.getpostman.Postman",
 			"com.mongodb.Compass",
 			"com.brave.Browser",

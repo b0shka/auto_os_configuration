@@ -480,7 +480,7 @@ remove_config_files() {
 
 main() {
 	delete
-	# delete_libreoffice
+	delete_libreoffice
 	install
 	install_flatpak
 	install_deb
