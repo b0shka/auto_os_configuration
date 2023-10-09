@@ -433,6 +433,30 @@ configure_tmux() {
 	# sudo chmod 777 $HOME/.tmux
 	git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 	~/.config/tmux/plugins/tpm/scripts/install_plugins.sh
+
+	create_tmux_sessions
+}
+
+create_tmux_sessions() {
+  	TMUX_SESSIONS=$(jq -r '.sessions' $CONFIG_FILE)
+	tmux_session_keys=$(echo $TMUX_SESSIONS | jq -r 'keys[]')
+
+	for session_key in $tmux_session_keys; do
+		WINDOWS=$(jq -r ".sessions.$session_key" $CONFIG_FILE)
+		window_keys=$(echo $WINDOWS | jq -r 'keys[]')
+		tmux new-session -d -s $session_key
+
+		for window_key in $window_keys; do
+			window_value=$(echo $WINDOWS | jq -r ".[\"$window_key\"]")
+			tmux new-window -t $session_key: -n $window_key
+			tmux send-keys -t $session_key:$window_key "$window_value" C-m
+			tmux send-keys -t $session_key:$window_key "clear" C-m
+
+			if tmux list-windows -t $session_key | grep -q "zsh"; then
+				tmux kill-window -t "$session_key:zsh"
+			fi
+		done
+	done
 }
 
 

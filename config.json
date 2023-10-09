@@ -228,6 +228,21 @@
 			"tmux"
 		]
 	},
+	"tmux": {
+		"sessions": {
+			"learning_backend": {
+				"nvim": "cd ~/programming/learning/backend/",
+				"run": "cd ~/programming/learning/backend/"
+			},
+			"scripts": {
+				"run": "cd ~/programming/scripts"
+			},
+			"study": {
+				"IvPKO": "cd ~/study/3\\ курс/ИвПКО/",
+				"web": "cd ~/study/3\\ курс/Веб\\ программирование/"
+			}
+		}
+	},
 	"nautilus": {
 		"preferences": {
 			"default-folder-viewer": "list-view",
