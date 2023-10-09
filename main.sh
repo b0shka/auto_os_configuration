@@ -438,11 +438,11 @@ configure_tmux() {
 }
 
 create_tmux_sessions() {
-  	TMUX_SESSIONS=$(jq -r '.sessions' $CONFIG_FILE)
+  	TMUX_SESSIONS=$(jq -r '.tmux.sessions' $CONFIG_FILE)
 	tmux_session_keys=$(echo $TMUX_SESSIONS | jq -r 'keys[]')
 
 	for session_key in $tmux_session_keys; do
-		WINDOWS=$(jq -r ".sessions.$session_key" $CONFIG_FILE)
+		WINDOWS=$(jq -r ".tmux.sessions.$session_key" $CONFIG_FILE)
 		window_keys=$(echo $WINDOWS | jq -r 'keys[]')
 		tmux new-session -d -s $session_key
 
