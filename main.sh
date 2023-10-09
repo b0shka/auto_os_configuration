@@ -361,17 +361,17 @@ configure_nautilus() {
 	# done
 }
 
-configure_vscode() {
-	VSCODE_EXTENSIONS=$(jq -r '.vscode.extensions[]' $CONFIG_FILE)
-	for i in ${VSCODE_EXTENSIONS[@]}; do
-	  	code --install-extension $i
+configure_vscodium() {
+	VSCODIUM_EXTENSIONS=$(jq -r '.vscodium.extensions[]' $CONFIG_FILE)
+	for i in ${VSCODIUM_EXTENSIONS[@]}; do
+	  	codium --install-extension $i
 	done
 
-	VSCODE_SETTINGS_PATH=$(jq -r '.config.vscode.settings' $CONFIG_FILE)
-	VSCODE_KEYBINDINGS_PATH=$(jq -r '.config.vscode.keybindings' $CONFIG_FILE)
+	VSCODIUM_SETTINGS_PATH=$(jq -r '.config.vscodium.settings' $CONFIG_FILE)
+	VSCODIUM_KEYBINDINGS_PATH=$(jq -r '.config.vscodium.keybindings' $CONFIG_FILE)
 
-	cp $VSCODE_SETTINGS_PATH "$HOME/.config/Code/User/"
-	cp $VSCODE_KEYBINDINGS_PATH "$HOME/.config/Code/User/"
+	cp $VSCODIUM_SETTINGS_PATH "$HOME/.config/VSCodium/User/"
+	cp $VSCODIUM_KEYBINDINGS_PATH "$HOME/.config/VSCodium/User/"
 }
 
 configure_keepassxc() {
@@ -498,16 +498,16 @@ main() {
 	configure_aliases
 	configure_favorite_apps
 	configure_default_apps
-	configure_zsh
-	configure_tmux
 	configure_other
 
 	configure_megacmd
+	configure_zsh
 	# configure_alacritty
 	configure_kitty
+	configure_tmux
 	configure_git
 	configure_nautilus
-	configure_vscode
+	configure_vscodium
 	configure_keepassxc
 	configure_gedit
 

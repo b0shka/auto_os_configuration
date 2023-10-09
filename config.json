@@ -15,9 +15,9 @@
 		},
 		"alacritty": "config_apps/alacritty.yml",
 		"kitty": "config_apps/kitty.conf",
-		"vscode": {
-			"settings": "config_apps/vscode/settings.json",
-			"keybindings": "config_apps/vscode/keybindings.json"
+		"vscodium": {
+			"settings": "config_apps/vscodium/settings.json",
+			"keybindings": "config_apps/vscodium/keybindings.json"
 		},
 		"keepassxc": "config_apps/keepassxc.ini",
 		"tmux": "config_apps/tmux.conf"
@@ -55,11 +55,11 @@
 			"python3-pip",
 			"python3-venv",
 			"flatpak",
-			"code",
 			"vlc",
 			"zsh",
 			"exa",
-			"tmux"
+			"tmux",
+			"solaar"
 		],
 		"install_flatpak": [
 			"org.telegram.desktop",
@@ -73,7 +73,8 @@
 		],
 		"install_deb": {
 			"mega": "https://mega.nz/linux/repo/xUbuntu_22.04/amd64/megacmd-xUbuntu_22.04_amd64.deb",
-			"anytype": "https://download.anytype.io/?action=download&key=desktop&id=127051615"
+			"anytype": "https://download.anytype.io/?action=download&key=desktop&id=127051615",
+			"codium": "https://github.com/VSCodium/vscodium/releases/download/1.83.0.23277/codium_1.83.0.23277_amd64.deb"
 		},
 		"favorite": [
 			"com.brave.Browser.desktop",
@@ -83,7 +84,7 @@
 			"org.telegram.desktop.desktop",
 			"com.todoist.Todoist.desktop",
 			"md.obsidian.Obsidian.desktop",
-			"code.desktop",
+			"codium.desktop",
 			"com.getpostman.Postman.desktop",
 			"org.keepassxc.KeePassXC.desktop",
 			"org.gnome.gedit.desktop",
@@ -189,7 +190,7 @@
 			"__pycache__"
 		]
 	},
-	"vscode": {
+	"vscodium": {
 		"extensions": [
 			"adpyke.codesnap",
 			"Codeium.codeium",
