@@ -125,10 +125,10 @@
 		"lt": "exa --tree --level=2",
 		"backup": "~/programming/scripts/backup/backup.sh",
 		"venv": "source ~/resources/env/bin/activate",
-		"backend": "tmux attach -t learning_backend && codium",
-		"scripts": "tmux attach -t scripts && codium",
-		"alg": "tmux attach -t alg && codium",
-		"study": "tmux attach -t study && codium"
+		"backend": "codium && tmux attach -t learning_backend",
+		"scripts": "codium && tmux attach -t scripts",
+		"alg": "codium && tmux attach -t alg",
+		"study": "codium && tmux attach -t study"
 	},
 	"os": {
 		"hotkeys": {
