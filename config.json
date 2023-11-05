@@ -124,7 +124,11 @@
 		"l": "exa --long --all --group",
 		"lt": "exa --tree --level=2",
 		"backup": "~/programming/scripts/backup/backup.sh",
-		"venv": "source ~/resources/env/bin/activate"
+		"venv": "source ~/resources/env/bin/activate",
+		"backend": "tmux attach -t learning_backend",
+		"scripts": "tmux attach -t scripts",
+		"alg": "tmux attach -t alg",
+		"study": "tmux attach -t study"
 	},
 	"os": {
 		"hotkeys": {
