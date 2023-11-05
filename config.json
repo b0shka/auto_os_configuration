@@ -1,5 +1,6 @@
 {
 	"config": {
+		"key_pass": ".keys/key.bin",
 		"env": ".env",
 		"theme": {
 			"path": "themes/WhiteSur-Dark.tar.xz",
@@ -181,6 +182,7 @@
 	},
 	"mega": {
 		"backup_name": "backup.tar.xz",
+		"backup_name_crypt": "backup.tar.xz.enc",
 		"exclude_folders": [
 			"node_modules",
 			".git",
