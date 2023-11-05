@@ -232,14 +232,17 @@
 		"sessions": {
 			"learning_backend": {
 				"nvim": "cd ~/programming/learning/backend/",
-				"run": "cd ~/programming/learning/backend/"
+				"run": "cd ~/programming/learning/backend/",
+				"docker": "cd"
 			},
 			"scripts": {
 				"run": "cd ~/programming/scripts"
 			},
 			"study": {
-				"IvPKO": "cd ~/study/3\\ курс/ИвПКО/",
-				"web": "cd ~/study/3\\ курс/Веб\\ программирование/"
+				"modeling": "cd ~/study/3\\ курс/Моделирование\\ процессов\\ и\\ систем/",
+				"decisions": "cd ~/study/3\\ курс/Теория\\ принятия\\ решений/",
+				"web_frontend": "cd ~/study/3\\ курс/Веб\\ программирование/gpt4/gpt4_frontend/",
+				"web_backend": "cd ~/study/3\\ курс/Веб\\ программирование/gpt4/gpt4_backend/"
 			}
 		}
 	},
@@ -259,7 +262,8 @@
 			"personal",
 			"programming",
 			"study",
-			"resources"
+			"resources",
+			"work"
 		]
 	},
 	"gedit": {
