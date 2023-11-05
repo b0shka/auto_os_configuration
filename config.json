@@ -238,6 +238,9 @@
 			"scripts": {
 				"run": "cd ~/programming/scripts"
 			},
+			"alg": {
+				"run": "cd ~/programming/algorithm/"
+			},
 			"study": {
 				"modeling": "cd ~/study/3\\ курс/Моделирование\\ процессов\\ и\\ систем/",
 				"decisions": "cd ~/study/3\\ курс/Теория\\ принятия\\ решений/",
