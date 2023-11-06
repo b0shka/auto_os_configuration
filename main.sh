@@ -447,9 +447,13 @@ create_tmux_sessions() {
 		tmux new-session -d -s $session_key
 
 		for window_key in $window_keys; do
-			window_value=$(echo $WINDOWS | jq -r ".[\"$window_key\"]")
+			# window_values=$(echo $WINDOWS | jq -r ".[\"$window_key\"]")
 			tmux new-window -t $session_key: -n $window_key
-			tmux send-keys -t $session_key:$window_key "$window_value" C-m
+
+			jq -r ".tmux.sessions.$session_key.$window_key[]" $CONFIG_FILE | while IFS= read -r command; do
+				tmux send-keys -t $session_key:$window_key "$command" C-m
+			done
+		
 			tmux send-keys -t $session_key:$window_key "clear" C-m
 
 			if tmux list-windows -t $session_key | grep -q "zsh"; then
