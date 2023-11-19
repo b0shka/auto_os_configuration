@@ -1,7 +1,7 @@
 {
 	"config": {
 		"key_pass": ".keys/key.bin",
-		"env": ".env",
+		"env": "configs/.env",
 		"theme": {
 			"path": "themes/WhiteSur-Dark.tar.xz",
 			"name": "WhiteSur-Dark"
@@ -14,14 +14,14 @@
 			"git": ".ssh/git",
 			"git_pub": ".ssh/git.pub"
 		},
-		"alacritty": "config_apps/alacritty.yml",
-		"kitty": "config_apps/kitty.conf",
+		"alacritty": "configs/alacritty.yml",
+		"kitty": "configs/kitty.conf",
 		"vscodium": {
-			"settings": "config_apps/vscodium/settings.json",
-			"keybindings": "config_apps/vscodium/keybindings.json"
+			"settings": "configs/vscodium/settings.json",
+			"keybindings": "configs/vscodium/keybindings.json"
 		},
-		"keepassxc": "config_apps/keepassxc.ini",
-		"tmux": "config_apps/tmux.conf"
+		"keepassxc": "configs/keepassxc.ini",
+		"tmux": "configs/tmux.conf"
 	},
 	"apps": {
 		"delete": [
@@ -52,15 +52,13 @@
 			"chrome-gnome-shell",
 			"mat2",
 			"kitty",
-			"filezilla",
 			"python3-pip",
 			"python3-venv",
 			"flatpak",
 			"vlc",
 			"zsh",
 			"exa",
-			"tmux",
-			"solaar"
+			"tmux"
 		],
 		"install_flatpak": [
 			"org.telegram.desktop",
@@ -100,7 +98,11 @@
 			"golang": "1.21.1",
 			"migrate": "v4.16.2",
 			"golangci-lint": "v1.54.2"
-		}
+		},
+		"docker_containers": [
+			"postgres:15-alpine",
+			"redis:7-alpine"
+		]
 	},
 	"paths": {
 		"notes": "personal/Заметки",
@@ -123,12 +125,13 @@
 		"ls": "exa",
 		"l": "exa --long --all --group",
 		"lt": "exa --tree --level=2",
-		"backup": "~/programming/scripts/backup/backup.sh",
+		"backup": "~/programming/scripts/backup/main.sh",
+		"config_os": "~/programming/scripts/config_os/main.sh",
 		"venv": "source ~/resources/env/bin/activate",
-		"backend": "codium && tmux attach -t learning_backend",
-		"scripts": "codium && tmux attach -t scripts",
-		"alg": "codium && tmux attach -t alg",
-		"study": "codium && tmux attach -t study"
+		"backend": "tmux attach -t learning_backend",
+		"scripts": "tmux attach -t scripts",
+		"alg": "tmux attach -t alg",
+		"study": "tmux attach -t study"
 	},
 	"os": {
 		"hotkeys": {
@@ -316,11 +319,9 @@
 	},
 	"remove_files": {
 		"config": [
-			".env",
 			"themes",
 			"icons",
-			"config_apps",
-			"config.json"
+			"configs"
 		],
 		"extra": [
 			"Видео",
@@ -330,5 +331,8 @@
 			"Общедоступные",
 			"Шаблоны"
 		]
+	},
+	"other": {
+		"notes_git_link": "https://github.com/b0shka/obsidian-notes"
 	}
 }
