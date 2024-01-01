@@ -21,36 +21,39 @@ main() {
 	install_deb
 	install_backend_tools
 
-	configure_themes_and_icons
-	configure_hotkeys
-	configure_dock_panel
-	configure_pop_cosmic
-	configure_interface
-	configure_night_light
-	configure_screensaver
-	configure_power
-	configure_privacy
-	configure_aliases
-	configure_favorite_apps
-	configure_default_apps
-	configure_other
-
-	configure_megacmd
 	configure_zsh
-	configure_kitty
-	configure_tmux
-	configure_git
-	configure_nautilus
-	configure_vscodium
-	configure_keepassxc
-	configure_gedit
 
-	download_folders_from_mega
-	download_notes
+	##############################
 
-	create_venv_python
-	remove_extra_files
-	remove_config_files
+	# configure_themes_and_icons
+	# configure_hotkeys
+	# configure_dock_panel
+	# configure_pop_cosmic
+	# configure_interface
+	# configure_night_light
+	# configure_screensaver
+	# configure_power
+	# configure_privacy
+	# configure_aliases
+	# configure_favorite_apps
+	# configure_default_apps
+	# configure_other
+
+	# configure_megacmd
+	# configure_kitty
+	# configure_tmux
+	# configure_git
+	# configure_nautilus
+	# configure_vscodium
+	# configure_keepassxc
+	# configure_gedit
+
+	# download_folders_from_mega
+	# download_notes
+
+	# create_venv_python
+	# remove_extra_files
+	# remove_config_files
 }
 
 if [ -n "$1" ]; then

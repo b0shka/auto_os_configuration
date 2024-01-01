@@ -52,49 +52,27 @@ install_backend_tools() {
 	install_docker_containers
 	install_tableplus
 
-	# sqlc
-	go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
+	TOOLS_BACKEND=$(jq -r '.apps.backend.tools[]' $CONFIG_FILE)
 
-	# migrate
-	go install github.com/golang-migrate/migrate/v4/cmd/migrate@latest
-	# VERSION_MIGRATE=$(jq -r '.apps.versions_backend_tools.migrate' $CONFIG_FILE)
-	# curl -L https://github.com/golang-migrate/migrate/releases/download/$VERSION_MIGRATE/migrate.linux-amd64.tar.gz | tar xvz
-	# sudo mv migrate /usr/bin/migrate
-
-	# mockgen
-	go install github.com/golang/mock/mockgen@latest
-
-	# swag
-	go install github.com/swaggo/swag/cmd/swag@latest
-
-	# golangci-lint
-	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-	# VERSION_GOLANGCI_LINT=$(jq -r '.apps.versions_backend_tools.golangci-lint' $CONFIG_FILE)
-	# curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin $VERSION_GOLANGCI_LINT
-
-	# other
-	go install golang.org/x/tools/gopls@latest
-	go install golang.org/x/tools/cmd/goimports@latest
-	go install github.com/cweill/gotests/gotests@latest
-	go install github.com/fatih/gomodifytags@latest
-	go install github.com/go-delve/delve/cmd/dlv@latest
+	for i in ${TOOLS_BACKEND[@]}; do
+	  	go install $i
+	done
 }
 
 install_golang() {
-	VERSION_GOLANG=$(jq -r '.apps.versions_backend_tools.golang' $CONFIG_FILE)
+	VERSION_GOLANG=$(jq -r '.apps.backend.versions.golang' $CONFIG_FILE)
 	wget https://go.dev/dl/go$VERSION_GOLANG.linux-amd64.tar.gz
 	sudo rm -rf /usr/local/go
 	sudo tar -C /usr/local -xzf go$VERSION_GOLANG.linux-amd64.tar.gz
 
-	export PATH=$PATH:/usr/local/go/bin
-	export PATH=$PATH:$HOME/go/bin
+	echo "export PATH=\$PATH:/usr/local/go/bin" >> ~/.profile
 }
 
 install_docker() {
 	sudo apt-get update
-	sudo apt-get install ca-certificates curl gnupg
+	sudo apt-get install ca-certificates curl gnupg -y
 
-	sudo install -m 0755 -d /etc/apt/keyrings
+	sudo install -m 0755 -d /etc/apt/keyrings -y
 	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 	sudo chmod a+r /etc/apt/keyrings/docker.gpg
 
@@ -104,11 +82,11 @@ install_docker() {
 	sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 	sudo apt-get update
-	sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+	sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
-	sudo groupadd docker
-	sudo usermod -aG docker $USER
-	newgrp docker
+	# sudo groupadd docker
+	# sudo usermod -aG docker $USER
+	# newgrp docker
 	sudo chmod 666 /var/run/docker.sock
 }
 
@@ -116,7 +94,7 @@ install_docker_containers() {
 	CONTAINERS=$(jq -r '.apps.docker_containers[]' $CONFIG_FILE)
 
 	for i in ${CONTAINERS[@]}; do
-	  	docker pull $i -y
+	  	docker pull $i
 	done
 }
 
@@ -126,5 +104,5 @@ install_tableplus() {
 	sudo add-apt-repository "deb [arch=amd64] https://deb.tableplus.com/debian/22 tableplus main"
 
 	sudo apt update
-	sudo apt install tableplus
+	sudo apt install tableplus -y
 }

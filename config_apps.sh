@@ -105,10 +105,6 @@ configure_zsh() {
 		sudo git clone $value $ZSH_CUSTOM/plugins/$key
 	done
 
-	ZSH_NOTIFY_IGNORE=$(jq -r '.zsh.notify_ignore[]' $CONFIG_FILE)
-	formatted_notify_ignore=$(printf '"%s" ' $ZSH_NOTIFY_IGNORE)
-	echo "AUTO_NOTIFY_IGNORE+=($formatted_notify_ignore)" >> ~/.zshrc
-
 	source ~/.zshrc
 }
 

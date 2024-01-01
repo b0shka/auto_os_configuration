@@ -6,7 +6,7 @@ download_folders_from_mega() {
 	KEY_PASS=$(jq -r '.config.key_pass' $CONFIG_FILE)
 
 	mega-get /$MEGA_BACKUP_NAME_CRYPT $HOME
-	openssl enc -aes-256-cbc -d -in $HOME/$MEGA_BACKUP_NAME_CRYPT -out $HOME/$MEGA_BACKUP_NAME -pass file:$HOME/$KEY_PASS
+	openssl enc -aes-256-cbc -d -pbkdf2 -salt -in $HOME/$MEGA_BACKUP_NAME_CRYPT -out $HOME/$MEGA_BACKUP_NAME -pass file:$HOME/$KEY_PASS
 	tar xf $HOME/$MEGA_BACKUP_NAME -C $HOME
 	
 	rm $HOME/$MEGA_BACKUP_NAME

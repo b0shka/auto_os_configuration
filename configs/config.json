@@ -79,7 +79,7 @@
 			"com.brave.Browser.desktop",
 			"ru.yandex.Browser.desktop",
 			"org.gnome.Nautilus.desktop",
-			"com.alacritty.Alacritty.desktop",
+			"kitty.desktop",
 			"org.telegram.desktop.desktop",
 			"com.todoist.Todoist.desktop",
 			"md.obsidian.Obsidian.desktop",
@@ -94,10 +94,24 @@
 		"default": {
 			"default-web-browser": "com.brave.Browser.desktop"
 		},
-		"versions_backend_tools": {
-			"golang": "1.21.1",
-			"migrate": "v4.16.2",
-			"golangci-lint": "v1.54.2"
+		"backend": {
+			"tools": [
+				"github.com/sqlc-dev/sqlc/cmd/sqlc@latest",
+				"github.com/golang-migrate/migrate/v4/cmd/migrate@latest",
+				"github.com/golang/mock/mockgen@latest",
+				"github.com/swaggo/swag/cmd/swag@latest",
+				"github.com/golangci/golangci-lint/cmd/golangci-lint@latest",
+				"golang.org/x/tools/gopls@latest",
+				"golang.org/x/tools/cmd/goimports@latest",
+				"github.com/cweill/gotests/gotests@latest",
+				"github.com/fatih/gomodifytags@latest",
+				"github.com/go-delve/delve/cmd/dlv@latest"
+			],
+			"versions": {
+				"golang": "1.21.1",
+				"migrate": "v4.16.2",
+				"golangci-lint": "v1.54.2"
+			}
 		},
 		"docker_containers": [
 			"postgres:15-alpine",
@@ -224,18 +238,12 @@
 			"dirhistory",
 			"history",
 			"jsontools",
-			"auto-notify",
 			"you-should-use"
 		],
 		"plugins_link_git": {
 			"zsh-autosuggestions": "https://github.com/zsh-users/zsh-autosuggestions",
-			"auto-notify": "https://github.com/MichaelAquilina/zsh-auto-notify.git",
 			"you-should-use": "https://github.com/MichaelAquilina/zsh-you-should-use.git"
-		},
-		"notify_ignore": [
-			"docker",
-			"tmux"
-		]
+		}
 	},
 	"tmux": {
 		"sessions": {
@@ -258,20 +266,6 @@
 			"alg": {
 				"run": [
 					"cd ~/programming/algorithm/"
-				]
-			},
-			"study": {
-				"modeling": [
-					"cd ~/study/3\\ курс/Моделирование\\ процессов\\ и\\ систем/"
-				],
-				"decisions": [
-					"cd ~/study/3\\ курс/Теория\\ принятия\\ решений/"
-				],
-				"web_frontend": [
-					"cd ~/study/3\\ курс/Веб\\ программирование/gpt4/gpt4_frontend/"
-				],
-				"web_backend": [
-					"cd ~/study/3\\ курс/Веб\\ программирование/gpt4/gpt4_backend/"
 				]
 			}
 		}
@@ -333,6 +327,6 @@
 		]
 	},
 	"other": {
-		"notes_git_link": "https://github.com/b0shka/obsidian-notes"
+		"notes_git_link": "git@github.com:b0shka/obsidian-notes.git"
 	}
 }
